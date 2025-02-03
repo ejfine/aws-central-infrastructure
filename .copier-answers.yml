@@ -1,0 +1,14 @@
+# Changes here will be overwritten by Copier
+_commit: 62c602b
+_src_path: gh:LabAutomationAndScreening/copier-aws-central-infrastructure.git
+aws_identity_center_id: d-9067c20053
+aws_production_account_id: 038462771856
+description: Manage central infra for this AWS org
+python_ci_versions:
+- 3.13.1
+python_version: 3.13.1
+repo_name: aws-central-infrastructure
+ssh_port_number: 52368
+use_staging_environment: false
+use_windows_in_ci: false
+
