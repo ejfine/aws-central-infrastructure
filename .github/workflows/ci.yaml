@@ -57,7 +57,7 @@ jobs:
       PYTHON_VERSION: 3.13.1
       DEPLOY_SCRIPT_MODULE_NAME: aws_central_infrastructure
       DEPLOY_SCRIPT_NAME: deploy_iac_management
-      PREVIEW_ROLE_NAME: InfraDeploy--aws-central-infrastructure
+      PREVIEW_ROLE_NAME: InfraPreview--aws-central-infrastructure
       AWS_ACCOUNT_ID: "038462771856"
 
 
