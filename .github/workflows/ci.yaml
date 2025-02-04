@@ -47,17 +47,19 @@ jobs:
       - name: Run pre-commit
         run:  pre-commit run -a
 
-  pulumi-preview:
+  pulumi-workflow:
     uses: ./.github/workflows/pulumi-aws.yml
     needs: [ lint ]
     with:
-      PULUMI_PREVIEW: true
       AWS_REGION: us-east-1
       PULUMI_STACK_NAME: prod
       PYTHON_VERSION: 3.13.1
       DEPLOY_SCRIPT_MODULE_NAME: aws_central_infrastructure
       DEPLOY_SCRIPT_NAME: deploy_iac_management
+      PULUMI_PREVIEW: true
       PREVIEW_ROLE_NAME: InfraPreview--aws-central-infrastructure
+      PULUMI_UP: ${{ github.ref == 'refs/heads/main' }}
+      PULUMI_UP_ROLE_NAME: InfraDeploy--aws-central-infrastructure
       AWS_ACCOUNT_ID: "038462771856"
 
 
