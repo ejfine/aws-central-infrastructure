@@ -1,5 +1,8 @@
 import logging
 
+from ephemeral_pulumi_deploy import get_aws_account_id
+from ephemeral_pulumi_deploy import get_config
+from ephemeral_pulumi_deploy import get_config_str
 from pulumi import export
 from pulumi_aws.iam import GetPolicyDocumentStatementArgs
 from pulumi_aws.iam import GetPolicyDocumentStatementConditionArgs
@@ -7,10 +10,6 @@ from pulumi_aws.iam import GetPolicyDocumentStatementPrincipalArgs
 from pulumi_aws.iam import get_policy_document
 from pulumi_aws.organizations import get_organization
 from pulumi_aws_native import s3
-
-from ..pulumi_ephemeral_deploy.utils import get_aws_account_id
-from ..pulumi_ephemeral_deploy.utils import get_config
-from ..pulumi_ephemeral_deploy.utils import get_config_str
 
 logger = logging.getLogger(__name__)
 
