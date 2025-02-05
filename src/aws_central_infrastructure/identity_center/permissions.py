@@ -5,7 +5,7 @@ from .lib import AwsSsoPermissionSetAccountAssignments
 
 def create_permissions(workloads_dict: dict[str, AwsLogicalWorkload]) -> None:
     admin_permission_set = AwsSsoPermissionSet(
-        name="LowRiskAccountAdminAccess2",
+        name="LowRiskAccountAdminAccess",
         description="Low Risk Account Admin Access",
         managed_policies=["AdministratorAccess"],
     )
