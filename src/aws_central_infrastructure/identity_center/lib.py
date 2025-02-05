@@ -2,13 +2,18 @@ from functools import cached_property
 from typing import Any
 from typing import override
 
+from ephemeral_pulumi_deploy import get_config_str
 from pulumi import ComponentResource
 from pulumi import ResourceOptions
 from pulumi_aws import identitystore as identitystore_classic
 from pulumi_aws import ssoadmin
+from pulumi_aws.iam import GetPolicyDocumentStatementArgs
+from pulumi_aws.iam import GetPolicyDocumentStatementConditionArgs
+from pulumi_aws.iam import get_policy_document
 from pydantic import BaseModel
 
 from ..iac_management.shared_lib import AwsAccountInfo
+from ..iac_management.shared_lib import AwsLogicalWorkload
 
 
 class OrgInfo(BaseModel):
@@ -45,13 +50,7 @@ def lookup_user_id(username: str) -> str:
 
 
 class AwsSsoPermissionSet(ComponentResource):
-    def __init__(
-        self,
-        *,
-        name: str,
-        description: str,
-        managed_policies: list[str],
-    ):
+    def __init__(self, *, name: str, description: str, managed_policies: list[str], inline_policy: str | None = None):
         super().__init__("labauto:AwsSsoPermissionSet", name, None)
         self.name = name
         permission_set = ssoadmin.PermissionSet(
@@ -71,11 +70,64 @@ class AwsSsoPermissionSet(ComponentResource):
                 permission_set_arn=self.permission_set_arn,
                 opts=ResourceOptions(parent=self),
             )
+        if inline_policy is not None:
+            _ = ssoadmin.PermissionSetInlinePolicy(
+                f"{name}-inline-policy",
+                instance_arn=ORG_INFO.sso_instance_arn,
+                permission_set_arn=self.permission_set_arn,
+                inline_policy=inline_policy,
+                opts=ResourceOptions(parent=self),
+            )
         self.register_outputs(
             {
                 "permission_set_arn": self.permission_set_arn,
             }
         )
+
+
+class AwsSsoPermissionSetContainer(BaseModel):
+    name: str
+    description: str
+    managed_policies: list[str]
+    _permission_set: AwsSsoPermissionSet | None = None
+
+    def create_permission_set(self, inline_policy: str | None = None) -> AwsSsoPermissionSet:
+        self._permission_set = AwsSsoPermissionSet(
+            name=self.name,
+            description=self.description,
+            managed_policies=self.managed_policies,
+            inline_policy=inline_policy,
+        )
+        return self._permission_set
+
+    @property
+    def permission_set(self) -> AwsSsoPermissionSet:
+        assert self._permission_set is not None
+        return self._permission_set
+
+
+LOW_RISK_ADMIN_PERM_SET_CONTAINER = AwsSsoPermissionSetContainer(
+    name="LowRiskAccountAdminAccess",
+    description="Low Risk Account Admin Access",
+    managed_policies=["AdministratorAccess"],
+)
+
+VIEW_ONLY_PERM_SET_CONTAINER = AwsSsoPermissionSetContainer(
+    name="ViewOnlyAccess",
+    description="The ability to view logs and other resource details in protected environments for troubleshooting.",
+    managed_policies=[
+        "AWSSupportAccess",  # Allow users to request AWS support for technical questions.
+        "job-function/ViewOnlyAccess",  # wide ranging attribute view access across a variety of services
+        "CloudWatchReadOnlyAccess",  # be able to read CloudWatch logs/metrics/etc
+        "AmazonAppStreamReadOnlyAccess",  # look at the details of stack/fleet information to troubleshoot any issues
+        "AmazonSSMReadOnlyAccess",  # look at SSM fleet/hybrid activation details
+        "AWSLambda_ReadOnlyAccess",  # review traces and logs for debugging Lambdas easily through the console
+        "CloudWatchEventsReadOnlyAccess",  # see information about event rules and patterns
+        "AmazonEventBridgeReadOnlyAccess",  # see basic metrics about Event Bridges to troubleshoot
+        "AmazonEventBridgeSchemasReadOnlyAccess",  # look at basic metrics about EventBridge Schemas to troubleshoot
+        "AmazonEC2ContainerRegistryReadOnly",  # describe ECR images
+    ],
+)
 
 
 class AwsSsoPermissionSetAccountAssignments(ComponentResource):
@@ -131,3 +183,46 @@ class User(BaseModel):  # NOT RECOMMENDED TO USE THIS IF YOU HAVE AN EXTERNAL ID
     def user(self) -> identitystore_classic.User:
         assert self._user is not None
         return self._user
+
+
+class DefaultWorkloadPermissionAssignments(BaseModel):
+    workload_info: AwsLogicalWorkload
+    users: list[str]
+
+    @override
+    def model_post_init(self, _: Any) -> None:
+        for protected_env_account in [*self.workload_info.prod_accounts, *self.workload_info.staging_accounts]:
+            _ = AwsSsoPermissionSetAccountAssignments(
+                account_info=protected_env_account,
+                permission_set=VIEW_ONLY_PERM_SET_CONTAINER.permission_set,
+                users=self.users,
+            )
+        for unprotected_env_account in self.workload_info.dev_accounts:
+            _ = AwsSsoPermissionSetAccountAssignments(
+                account_info=unprotected_env_account,
+                permission_set=LOW_RISK_ADMIN_PERM_SET_CONTAINER.permission_set,
+                users=self.users,
+            )
+
+
+def create_read_state_inline_policy() -> str:
+    state_bucket_name = get_config_str("proj:backend_bucket_name")
+    return get_policy_document(
+        statements=[
+            GetPolicyDocumentStatementArgs(
+                effect="Allow",
+                actions=["s3:GetObject", "s3:GetObjectVersion"],
+                resources=[f"arn:aws:s3:::{state_bucket_name}/${{aws:PrincipalAccount}}/*"],
+            ),
+            GetPolicyDocumentStatementArgs(
+                effect="Allow",
+                actions=["s3:ListBucket"],
+                resources=[f"arn:aws:s3:::{state_bucket_name}"],
+                conditions=[
+                    GetPolicyDocumentStatementConditionArgs(
+                        test="StringLike", variable="s3:prefix", values=["${aws:PrincipalAccount}/*"]
+                    ),
+                ],
+            ),
+        ]
+    ).json

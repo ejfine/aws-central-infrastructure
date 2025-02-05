@@ -1,14 +1,15 @@
 from ..iac_management.shared_lib import AwsLogicalWorkload
-from .lib import AwsSsoPermissionSet
+from .lib import LOW_RISK_ADMIN_PERM_SET_CONTAINER
+from .lib import VIEW_ONLY_PERM_SET_CONTAINER
 from .lib import AwsSsoPermissionSetAccountAssignments
+from .lib import DefaultWorkloadPermissionAssignments
+from .lib import create_read_state_inline_policy
 
 
 def create_permissions(workloads_dict: dict[str, AwsLogicalWorkload]) -> None:
-    admin_permission_set = AwsSsoPermissionSet(
-        name="LowRiskAccountAdminAccess",
-        description="Low Risk Account Admin Access",
-        managed_policies=["AdministratorAccess"],
-    )
+    admin_permission_set = LOW_RISK_ADMIN_PERM_SET_CONTAINER.create_permission_set()
+
+    _ = VIEW_ONLY_PERM_SET_CONTAINER.create_permission_set(inline_policy=create_read_state_inline_policy())
 
     _ = AwsSsoPermissionSetAccountAssignments(
         account_info=workloads_dict["central-infra"].prod_accounts[0],
@@ -25,3 +26,4 @@ def create_permissions(workloads_dict: dict[str, AwsLogicalWorkload]) -> None:
         permission_set=admin_permission_set,
         users=["eli.fine"],
     )
+    _ = DefaultWorkloadPermissionAssignments(workload_info=workloads_dict["cloud-courier"], users=["eli.fine"])
