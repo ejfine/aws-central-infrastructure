@@ -3,10 +3,13 @@ from pulumi import ResourceOptions
 from pulumi_aws import identitystore as identitystore_classic
 from pulumi_aws import ssoadmin
 
+from ..iac_management.shared_lib import AwsAccountInfo
+
 
 class AwsSsoPermissionSet(ComponentResource):
     def __init__(
         self,
+        *,
         name: str,
         description: str,
         managed_policies: list[str],
@@ -44,12 +47,11 @@ class AwsSsoPermissionSetAccountAssignments(ComponentResource):
     def __init__(
         self,
         *,
-        account_id: str,
-        account_name: str,
+        account_info: AwsAccountInfo,
         permission_set: AwsSsoPermissionSet,
         users: list[str],
     ):
-        resource_name = f"{permission_set.name}-{account_name}"
+        resource_name = f"{permission_set.name}-{account_info.name}"
         super().__init__(
             "labauto:AwsSsoPermissionSetAccountAssignments",
             resource_name,
@@ -68,7 +70,7 @@ class AwsSsoPermissionSetAccountAssignments(ComponentResource):
                 permission_set_arn=permission_set.permission_set_arn,
                 principal_id=self.lookup_user_id(user),
                 principal_type="USER",
-                target_id=account_id,
+                target_id=account_info.id,
                 target_type="AWS_ACCOUNT",
                 opts=ResourceOptions(parent=self),
             )
