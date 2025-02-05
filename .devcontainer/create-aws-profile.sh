@@ -3,9 +3,15 @@ set -ex
 
 mkdir -p ~/.aws
 cat >> ~/.aws/config <<EOF
-[profile development]
+[profile central-infra]
 sso_session = org
 sso_account_id = 038462771856
+sso_role_name = LowRiskAccountAdminAccess
+region = us-east-1
+
+[profile identity-center]
+sso_session = org
+sso_account_id = 872515268414
 sso_role_name = LowRiskAccountAdminAccess
 region = us-east-1
 

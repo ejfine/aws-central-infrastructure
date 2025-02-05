@@ -4,7 +4,7 @@ from typing import Any
 from ephemeral_pulumi_deploy import run_cli
 from pulumi.automation import ConfigValue
 
-from .iac_management.program import pulumi_program
+from .identity_center.program import pulumi_program
 
 logger = logging.getLogger(__name__)
 
@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 def generate_stack_config() -> dict[str, Any]:
     """Generate the stack configuration."""
     stack_config: dict[str, Any] = {}
-    stack_config["proj:pulumi_project_name"] = "iac-management"
+    stack_config["proj:pulumi_project_name"] = "identity-center"
     stack_config["proj:aws_org_home_region"] = ConfigValue(value="us-east-1")
     github_repo_name = "aws-central-infrastructure"
     stack_config["proj:github_repo_name"] = github_repo_name
