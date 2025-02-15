@@ -12,8 +12,8 @@ from pulumi_aws.iam import GetPolicyDocumentStatementConditionArgs
 from pulumi_aws.iam import get_policy_document
 from pydantic import BaseModel
 
-from ..iac_management.shared_lib import AwsAccountInfo
-from ..iac_management.shared_lib import AwsLogicalWorkload
+from aws_central_infrastructure.iac_management.lib.shared_lib import AwsAccountInfo
+from aws_central_infrastructure.iac_management.lib.shared_lib import AwsLogicalWorkload
 
 
 class OrgInfo(BaseModel):

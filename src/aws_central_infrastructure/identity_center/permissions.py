@@ -1,4 +1,5 @@
-from ..iac_management.shared_lib import AwsLogicalWorkload
+from aws_central_infrastructure.iac_management.lib.shared_lib import AwsLogicalWorkload
+
 from .lib import LOW_RISK_ADMIN_PERM_SET_CONTAINER
 from .lib import VIEW_ONLY_PERM_SET_CONTAINER
 from .lib import AwsSsoPermissionSetAccountAssignments

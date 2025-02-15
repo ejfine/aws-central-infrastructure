@@ -7,7 +7,7 @@ from pulumi import export
 from pulumi_aws_native import Provider
 from pulumi_aws_native import s3
 
-from .github_oidc import generate_all_oidc
+from ..github_oidc import generate_all_oidc
 from .github_oidc_lib import AwsAccountId
 from .github_oidc_lib import deploy_all_oidc
 from .pulumi_bootstrap import AwsWorkloadPulumiBootstrap

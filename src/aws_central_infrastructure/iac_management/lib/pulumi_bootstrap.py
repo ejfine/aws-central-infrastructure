@@ -14,7 +14,7 @@ from pulumi_aws_native import Provider
 from pulumi_aws_native import ProviderAssumeRoleArgs
 from pulumi_aws_native import ssm
 
-from ..constants import CENTRAL_INFRA_REPO_NAME
+from ...constants import CENTRAL_INFRA_REPO_NAME
 from .github_oidc_lib import AwsAccountId
 from .shared_lib import AwsLogicalWorkload
 

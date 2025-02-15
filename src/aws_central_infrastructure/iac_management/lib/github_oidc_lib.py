@@ -38,6 +38,7 @@ def create_kms_policy() -> iam.RolePolicyArgs:
         policy_document=get_policy_document(
             statements=[
                 GetPolicyDocumentStatementArgs(
+                    sid="UseCentralKmsKeyForSecretsInStateFile",
                     effect="Allow",
                     actions=[
                         "kms:Decrypt",
@@ -46,12 +47,24 @@ def create_kms_policy() -> iam.RolePolicyArgs:
                     resources=[kms_key_arn],
                 ),
                 GetPolicyDocumentStatementArgs(  # TODO: add this to the aws-organizations repo roles
+                    sid="CreateMetadataAndLocks",
                     effect="Allow",
                     actions=[
                         "s3:PutObject",
                     ],
                     resources=[
                         f"arn:aws:s3:::{get_config_str('proj:backend_bucket_name')}/${{aws:PrincipalAccount}}/*"
+                    ],
+                ),
+                GetPolicyDocumentStatementArgs(  # TODO: add this to the aws-organizations repo roles
+                    sid="RemoveLock",
+                    effect="Allow",
+                    actions=[
+                        "s3:DeleteObject",
+                        "s3:DeleteObjectVersion",
+                    ],
+                    resources=[
+                        f"arn:aws:s3:::{get_config_str('proj:backend_bucket_name')}/${{aws:PrincipalAccount}}/*/.pulumi/locks/*.json"
                     ],
                 ),
             ]
