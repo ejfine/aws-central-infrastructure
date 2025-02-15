@@ -1,15 +1,17 @@
 # Changes here will be overwritten by Copier
-_commit: v0.0.2
+_commit: v0.0.2-1-gb6adccd
 _src_path: gh:LabAutomationAndScreening/copier-aws-central-infrastructure.git
 aws_identity_center_id: d-9067c20053
 aws_org_home_region: us-east-1
 aws_production_account_id: 038462771856
+aws_region_for_stack: us-east-1
 central_infra_github_organization_name: ejfine
 description: Manage central infra for this AWS org
 identity_center_production_account_id: '872515268414'
 initial_iac_management_deploy_occurred: true
 python_version: 3.13.1
 repo_name: aws-central-infrastructure
+repo_org_name: ejfine
 ssh_port_number: 52368
 use_staging_environment: false
 use_windows_in_ci: false
