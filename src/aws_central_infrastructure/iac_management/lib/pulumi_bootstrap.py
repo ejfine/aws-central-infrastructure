@@ -4,7 +4,6 @@ from ephemeral_pulumi_deploy import get_config_str
 from ephemeral_pulumi_deploy.utils import common_tags
 from pulumi import ComponentResource
 from pulumi import ResourceOptions
-from pulumi.runtime import is_dry_run
 from pulumi_aws.iam import GetPolicyDocumentStatementArgs
 from pulumi_aws.iam import GetPolicyDocumentStatementConditionArgs
 from pulumi_aws.iam import GetPolicyDocumentStatementPrincipalArgs
@@ -34,25 +33,17 @@ class AwsWorkloadPulumiBootstrap(ComponentResource):
         super().__init__("labauto:AwsWorkloadPulumiBootstrap", workload.name, None)
         organization_home_region = get_config_str("proj:aws_org_home_region")
         all_accounts = [*workload.prod_accounts, *workload.staging_accounts, *workload.dev_accounts]
-        run_type = "Preview" if is_dry_run() else "Deploy"
         self.providers = {}
         for account in all_accounts:
-            role_arn = f"arn:aws:iam::{account.id}:role/Infra{run_type}--{CENTRAL_INFRA_REPO_NAME}"
+            role_arn = f"arn:aws:iam::{account.id}:role/InfraDeploy--{CENTRAL_INFRA_REPO_NAME}"
 
-            assume_role = ProviderAssumeRoleArgs(role_arn=role_arn, session_name=f"pulumi-{run_type.lower()}")
+            assume_role = ProviderAssumeRoleArgs(role_arn=role_arn, session_name="pulumi")
             provider = Provider(
                 f"central-infra-provider-for-{account.name}",
                 assume_role=assume_role,
                 allowed_account_ids=[account.id],
                 region=organization_home_region,
-                opts=ResourceOptions(
-                    parent=self,
-                    # TODO: figure out why ignore_changes isn't working
-                    ignore_changes=[
-                        "assumeRole.roleArn",
-                        "assumeRole.sessionName",
-                    ],  # ignore the ARN changes since during a preview we use the Preview Role, not the Deploy Role
-                ),
+                opts=ResourceOptions(parent=self),
             )
             self.providers[account.id] = provider
             _ = ssm.Parameter(
