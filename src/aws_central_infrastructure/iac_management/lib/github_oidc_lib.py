@@ -1,3 +1,5 @@
+from typing import TypedDict
+
 from ephemeral_pulumi_deploy import get_config_str
 from ephemeral_pulumi_deploy.utils import common_tags_native
 from pulumi import ComponentResource
@@ -17,6 +19,14 @@ from .shared_lib import AwsLogicalWorkload
 
 type WorkloadName = str
 type AwsAccountId = str
+
+
+class CommonOidcConfigKwargs(TypedDict):
+    role_name: str
+    repo_org: str
+    repo_name: str
+    managed_policy_arns: list[str]
+    role_policy: iam.RolePolicyArgs
 
 
 class GithubOidcConfig(BaseModel):
@@ -84,14 +94,14 @@ def create_oidc_for_standard_workload(
         role_name_ending += f"--{role_name_suffix}"
     kms_policy = create_kms_policy()
     configs: list[GithubOidcConfig] = []
-    preview_kwargs = {
+    preview_kwargs: CommonOidcConfigKwargs = {
         "role_name": f"InfraPreview--{role_name_ending}",
         "repo_org": repo_org,
         "repo_name": repo_name,
         "managed_policy_arns": ["arn:aws:iam::aws:policy/ReadOnlyAccess"],
         "role_policy": kms_policy,
     }
-    deploy_kwargs = {
+    deploy_kwargs: CommonOidcConfigKwargs = {
         "role_name": f"InfraDeploy--{role_name_ending}",
         "repo_org": repo_org,
         "repo_name": repo_name,
@@ -102,13 +112,13 @@ def create_oidc_for_standard_workload(
         configs.append(
             GithubOidcConfig(
                 aws_account_id=dev_account.id,
-                **deploy_kwargs,  # type: ignore[reportArgumentType] # pyright wants a TypedDict here, but not worth it
+                **deploy_kwargs,
             )
         )
         configs.append(
             GithubOidcConfig(
                 aws_account_id=dev_account.id,
-                **preview_kwargs,  # type: ignore[reportArgumentType] # pyright wants a TypedDict here, but not worth it
+                **preview_kwargs,
             )
         )
     for staging_account in workload_info.staging_accounts:
@@ -116,13 +126,13 @@ def create_oidc_for_standard_workload(
             GithubOidcConfig(
                 aws_account_id=staging_account.id,
                 restrictions="ref:refs/heads/main",
-                **deploy_kwargs,  # type: ignore[reportArgumentType] # pyright wants a TypedDict here, but not worth it
+                **deploy_kwargs,
             )
         )
         configs.append(
             GithubOidcConfig(
                 aws_account_id=staging_account.id,
-                **preview_kwargs,  # type: ignore[reportArgumentType] # pyright wants a TypedDict here, but not worth it
+                **preview_kwargs,
             )
         )
     for prod_account in workload_info.prod_accounts:
@@ -130,14 +140,14 @@ def create_oidc_for_standard_workload(
             GithubOidcConfig(
                 aws_account_id=prod_account.id,
                 restrictions="ref:refs/heads/main",
-                **deploy_kwargs,  # type: ignore[reportArgumentType] # pyright wants a TypedDict here, but not worth it
+                **deploy_kwargs,
             )
         )
         configs.append(
             GithubOidcConfig(
                 aws_account_id=prod_account.id,
                 restrictions="ref:refs/heads/main",
-                **preview_kwargs,  # type: ignore[reportArgumentType] # pyright wants a TypedDict here, but not worth it
+                **preview_kwargs,
             )
         )
     return configs

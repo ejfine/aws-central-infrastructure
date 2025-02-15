@@ -36,7 +36,6 @@ class AwsWorkloadPulumiBootstrap(ComponentResource):
         self.providers = {}
         for account in all_accounts:
             role_arn = f"arn:aws:iam::{account.id}:role/InfraDeploy--{CENTRAL_INFRA_REPO_NAME}"
-
             assume_role = ProviderAssumeRoleArgs(role_arn=role_arn, session_name="pulumi")
             provider = Provider(
                 f"central-infra-provider-for-{account.name}",
