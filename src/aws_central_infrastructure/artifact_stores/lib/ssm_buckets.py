@@ -42,31 +42,52 @@ class ManualArtifactsBucket(ComponentResource):
         org_id = get_organization().id
         _ = s3.BucketPolicy(
             append_resource_suffix("manual-artifacts"),
+            opts=ResourceOptions(parent=self, delete_before_replace=True),
             bucket=self.bucket.bucket_name,  # type: ignore[reportArgumentType] # pyright somehow thinks a bucket name can be Output[None], which doesn't seem possible
-            policy_document=get_policy_document(
-                statements=[
-                    GetPolicyDocumentStatementArgs(
-                        effect="Allow",
-                        actions=["s3:PutObject", "s3:GetObject", "s3:ListBucket"],
-                        principals=[
-                            GetPolicyDocumentStatementPrincipalArgs(
-                                type="*",  # TODO: consider locking this down to just people for PutObject
-                                identifiers=[
-                                    "*"
-                                ],  # Anyone can do anything with this bucket if they themselves have been granted permission. WORM model keeps files secure.
-                            )
-                        ],
-                        resources=["*"],
-                        conditions=[
-                            GetPolicyDocumentStatementConditionArgs(
-                                values=[org_id],
-                                test="StringEquals",
-                                variable="aws:PrincipalOrgID",
-                            ),
-                        ],
-                    ),
-                ]
-            ).json,
+            policy_document=self.bucket.bucket_name.apply(
+                lambda bucket_name: get_policy_document(
+                    statements=[
+                        GetPolicyDocumentStatementArgs(
+                            effect="Allow",
+                            actions=["s3:PutObject", "s3:GetObject"],
+                            principals=[
+                                GetPolicyDocumentStatementPrincipalArgs(
+                                    type="*",  # TODO: consider locking this down to just people for PutObject
+                                    identifiers=[
+                                        "*"
+                                    ],  # Anyone can do anything with this bucket if they themselves have been granted permission. WORM model keeps files secure.
+                                )
+                            ],
+                            resources=[f"arn:aws:s3:::{bucket_name}/*"],
+                            conditions=[
+                                GetPolicyDocumentStatementConditionArgs(
+                                    values=[org_id],
+                                    test="StringEquals",
+                                    variable="aws:PrincipalOrgID",
+                                ),
+                            ],
+                        ),
+                        GetPolicyDocumentStatementArgs(
+                            effect="Allow",
+                            actions=["s3:ListBucket"],
+                            principals=[
+                                GetPolicyDocumentStatementPrincipalArgs(
+                                    type="*",
+                                    identifiers=["*"],
+                                )
+                            ],
+                            resources=[f"arn:aws:s3:::{bucket_name}"],
+                            conditions=[
+                                GetPolicyDocumentStatementConditionArgs(
+                                    values=[org_id],
+                                    test="StringEquals",
+                                    variable="aws:PrincipalOrgID",
+                                ),
+                            ],
+                        ),
+                    ]
+                ).json
+            ),
         )
 
 
@@ -80,6 +101,7 @@ class DistributorPackagesBucket(ComponentResource):
         org_id = get_organization().id
         _ = s3.BucketPolicy(
             append_resource_suffix("distributor-packages"),
+            opts=ResourceOptions(parent=self, delete_before_replace=True),
             bucket=self.bucket.bucket_name,  # type: ignore[reportArgumentType] # pyright somehow thinks a bucket name can be Output[None], which doesn't seem possible
             policy_document=self.bucket.bucket_name.apply(
                 lambda bucket_name: get_policy_document(
@@ -90,13 +112,18 @@ class DistributorPackagesBucket(ComponentResource):
                             principals=[
                                 GetPolicyDocumentStatementPrincipalArgs(
                                     type="AWS",
-                                    identifiers=[
-                                        "*:role/InfraDeploy*",
-                                        "*:role/InfraPreview*",
-                                    ],
+                                    identifiers=["*"],
                                 )
                             ],
                             conditions=[
+                                GetPolicyDocumentStatementConditionArgs(
+                                    variable="aws:PrincipalArn",
+                                    test="StringLike",
+                                    values=[
+                                        "arn:aws:iam::*:role/InfraDeploy*",
+                                        "arn:aws:iam::*:role/InfraPreview*",
+                                    ],
+                                ),
                                 GetPolicyDocumentStatementConditionArgs(
                                     variable="aws:PrincipalOrgID",
                                     test="StringEquals",
@@ -111,14 +138,19 @@ class DistributorPackagesBucket(ComponentResource):
                             principals=[
                                 GetPolicyDocumentStatementPrincipalArgs(
                                     type="AWS",
-                                    identifiers=[
-                                        "*:role/InfraDeploy*",
-                                        "*:role/InfraPreview*",
-                                    ],
+                                    identifiers=["*"],
                                 )
                             ],
                             resources=[f"arn:aws:s3:::{bucket_name}"],
                             conditions=[
+                                GetPolicyDocumentStatementConditionArgs(
+                                    variable="aws:PrincipalArn",
+                                    test="StringLike",
+                                    values=[
+                                        "arn:aws:iam::*:role/InfraDeploy*",
+                                        "arn:aws:iam::*:role/InfraPreview*",
+                                    ],
+                                ),
                                 GetPolicyDocumentStatementConditionArgs(
                                     variable="aws:PrincipalOrgID",
                                     test="StringEquals",
