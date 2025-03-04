@@ -6,7 +6,7 @@ aws_org_home_region: us-east-1
 aws_production_account_id: 038462771856
 aws_region_for_stack: us-east-1
 central_infra_github_organization_name: ejfine
-configure_cloud_courier: false
+configure_cloud_courier: true
 description: Manage central infra for this AWS org
 identity_center_production_account_id: '872515268414'
 initial_iac_management_deploy_occurred: true
