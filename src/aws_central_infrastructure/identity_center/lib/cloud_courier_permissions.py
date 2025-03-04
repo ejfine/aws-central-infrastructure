@@ -1,4 +1,5 @@
 from pulumi_aws.iam import GetPolicyDocumentStatementArgs
+from pulumi_aws.iam import GetPolicyDocumentStatementConditionArgs
 from pulumi_aws.iam import get_policy_document
 
 from .lib import UserInfo
@@ -60,6 +61,56 @@ def create_read_permission_set() -> AwsSsoPermissionSet:
     )
 
 
+def create_ssm_permission_set() -> AwsSsoPermissionSet:
+    return AwsSsoPermissionSet(
+        name="CloudCourierUploadAgentAdmin",
+        description="Permissions to install, stop, start, and update the Cloud Courier Upload Agent running on the Lab computers.",
+        inline_policy=get_policy_document(
+            statements=[
+                GetPolicyDocumentStatementArgs(
+                    sid="TopLevelSsmPermissions",
+                    effect="Allow",
+                    actions=[
+                        "ssm:ListCommands",
+                        "ssm:ListAssociations",
+                        "ssm:ListTagsForResource",  # this could be locked down further...but low risk
+                    ],
+                    resources=["*"],
+                ),
+                GetPolicyDocumentStatementArgs(
+                    sid="SsmInstancePermissions",
+                    effect="Allow",
+                    actions=[
+                        "ssm:ListInstanceAssociations",
+                        "ssm:ListNodes",
+                        "ssm:DescribeInstanceInformation",
+                        "ssm:DescribeInstanceProperties",
+                    ],
+                    resources=["*"],
+                ),
+                GetPolicyDocumentStatementArgs(
+                    sid="SsmDocumentPermissions",
+                    effect="Allow",
+                    actions=[
+                        "ssm:ListDocumentMetadataHistory",
+                        "ssm:ListDocuments",
+                        "ssm:DescribeDocument",
+                        "ssm:ListDocumentVersions",
+                    ],
+                    resources=["*"],
+                    conditions=[
+                        GetPolicyDocumentStatementConditionArgs(
+                            test="StringEquals",
+                            variable="aws:ResourceTag/pulumi-project-name",
+                            values=["cloud-courier"],
+                        ),
+                    ],
+                ),
+            ]
+        ).json,
+    )
+
+
 def create_cloud_courier_permissions(
     *,
     workload_info: AwsLogicalWorkload,
@@ -79,3 +130,14 @@ def create_cloud_courier_permissions(
         workload_info=workload_info,
         users=administrators,
     )
+    ssm_access = create_ssm_permission_set()
+    for protected_env_account in [
+        *workload_info.prod_accounts,
+        *workload_info.staging_accounts,
+        *workload_info.dev_accounts,  # TODO: remove before merge
+    ]:
+        _ = AwsSsoPermissionSetAccountAssignments(
+            account_info=protected_env_account,
+            permission_set=ssm_access,
+            users=administrators,
+        )
