@@ -18,6 +18,7 @@ def _create_read_permission_set() -> AwsSsoPermissionSet:
         inline_policy=get_policy_document(
             statements=[
                 GetPolicyDocumentStatementArgs(
+                    sid="ObjectLevelPermissions",
                     effect="Allow",
                     actions=[
                         "s3:GetObject",
@@ -28,6 +29,7 @@ def _create_read_permission_set() -> AwsSsoPermissionSet:
                     resources=[f"arn:aws:s3:::{cloud_courier_bucket_pattern}/*"],
                 ),
                 GetPolicyDocumentStatementArgs(
+                    sid="BucketLevelPermissions",
                     effect="Allow",
                     actions=[
                         "s3:ListBucket",
@@ -38,6 +40,21 @@ def _create_read_permission_set() -> AwsSsoPermissionSet:
                         "s3:GetBucketMetadataTableConfiguration",
                     ],
                     resources=[f"arn:aws:s3:::{cloud_courier_bucket_pattern}"],
+                ),
+                GetPolicyDocumentStatementArgs(  # TODO: remove this if we can get the SSO Permission Set Relay working better
+                    sid="TopLevelS3Permissions",
+                    effect="Allow",
+                    actions=[
+                        "s3:ListAllMyBuckets",
+                    ],
+                ),
+                GetPolicyDocumentStatementArgs(
+                    sid="ReadBucketMetrics",
+                    effect="Allow",
+                    actions=[
+                        "cloudwatch:ListMetrics",
+                    ],  # there doesn't appear to be a simple way to further lock down with RequestConditions
+                    resources=["*"],
                 ),
             ]
         ).json,
@@ -50,6 +67,7 @@ def create_cloud_courier_permissions(*, workload_info: AwsLogicalWorkload) -> No
     _ = AwsSsoPermissionSetAccountAssignments(
         account_info=workload_info.prod_accounts[0],
         permission_set=read_access,
+        # TODO: add a relay to the S3 console for buckets....TBD what to do about region
         users=[all_created_users["eli.fine"]],
     )
 
