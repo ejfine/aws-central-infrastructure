@@ -39,12 +39,12 @@ class UserAttributes(BaseModel):
     exclude_from_cloud_courier: bool = False
 
 
-_all_created_users: dict[Username, UserAttributes] = {}
-
-
 class UserInfo(BaseModel):
     username: Username
     attributes: UserAttributes = Field(default_factory=UserAttributes)
+
+
+all_created_users: dict[Username, UserInfo] = {}
 
 
 class User(BaseModel):  # NOT RECOMMENDED TO USE THIS IF YOU HAVE AN EXTERNAL IDENTITY PROVIDER!!
@@ -56,7 +56,7 @@ class User(BaseModel):  # NOT RECOMMENDED TO USE THIS IF YOU HAVE AN EXTERNAL ID
 
     @override
     def model_post_init(self, _: Any) -> None:
-        _all_created_users[self.username] = self.user_attributes
+        all_created_users[self.username] = UserInfo(username=self.username, attributes=self.user_attributes)
         self._user = identitystore_classic.User(
             f"{self.first_name}-{self.last_name}",
             identity_store_id=ORG_INFO.identity_store_id,
