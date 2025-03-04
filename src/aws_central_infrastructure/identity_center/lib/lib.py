@@ -35,8 +35,8 @@ ORG_INFO = OrgInfo()
 
 
 class UserAttributes(BaseModel):
-    exclude_from_manual_artifacts: bool = False
-    exclude_from_cloud_courier: bool = False
+    grant_manual_artifacts_write: bool = False
+    grant_cloud_courier_read: bool = False
 
 
 class UserInfo(BaseModel):

@@ -31,8 +31,17 @@ def lookup_user_id(username: Username) -> str:
 
 
 class AwsSsoPermissionSet(ComponentResource):
-    def __init__(self, *, name: str, description: str, managed_policies: list[str], inline_policy: str | None = None):
+    def __init__(
+        self,
+        *,
+        name: str,
+        description: str,
+        managed_policies: list[str] | None = None,
+        inline_policy: str | None = None,
+    ):
         super().__init__("labauto:AwsSsoPermissionSet", name, None)
+        if managed_policies is None:
+            managed_policies = []
         self.name = name
         permission_set = ssoadmin.PermissionSet(
             name,
