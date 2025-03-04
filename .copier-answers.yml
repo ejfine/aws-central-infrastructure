@@ -1,11 +1,12 @@
 # Changes here will be overwritten by Copier
-_commit: v0.0.6-2-g6172280
+_commit: v0.0.6-4-g7e6ed34
 _src_path: gh:LabAutomationAndScreening/copier-aws-central-infrastructure.git
 aws_identity_center_id: d-9067c20053
 aws_org_home_region: us-east-1
 aws_production_account_id: 038462771856
 aws_region_for_stack: us-east-1
 central_infra_github_organization_name: ejfine
+configure_cloud_courier: false
 description: Manage central infra for this AWS org
 identity_center_production_account_id: '872515268414'
 initial_iac_management_deploy_occurred: true
