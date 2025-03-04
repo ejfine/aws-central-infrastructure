@@ -139,8 +139,10 @@ class AwsSsoPermissionSetAccountAssignments(ComponentResource):
         *,
         account_info: AwsAccountInfo,
         permission_set: AwsSsoPermissionSet,
-        users: list[UserInfo],
+        users: list[UserInfo] | None = None,
     ):
+        if users is None:
+            users = []
         resource_name = f"{permission_set.name}-{account_info.name}"
         super().__init__(
             "labauto:AwsSsoPermissionSetAccountAssignments",
@@ -164,7 +166,7 @@ class AwsSsoPermissionSetAccountAssignments(ComponentResource):
 
 class DefaultWorkloadPermissionAssignments(BaseModel):
     workload_info: AwsLogicalWorkload
-    users: list[UserInfo]
+    users: list[UserInfo] | None = None
 
     @override
     def model_post_init(self, _: Any) -> None:

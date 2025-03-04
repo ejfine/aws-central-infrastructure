@@ -6,7 +6,7 @@ from pulumi import export
 
 from aws_central_infrastructure.iac_management.lib.workload_params import load_workload_info
 
-from ..cloud_courier_permissions import create_cloud_courier_permissions
+from ..cloud_courier_permissions import configure_cloud_courier_permissions
 from ..permissions import create_permissions
 from ..users import create_users
 
@@ -27,4 +27,4 @@ def pulumi_program() -> None:
     create_permissions(workloads_dict)
 
     # Application-specific permissions managed by copier template
-    create_cloud_courier_permissions(workload_info=workloads_dict["cloud-courier"])
+    configure_cloud_courier_permissions(workload_info=workloads_dict["cloud-courier"])
