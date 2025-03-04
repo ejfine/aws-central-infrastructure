@@ -8,6 +8,6 @@ def configure_cloud_courier_permissions(*, workload_info: AwsLogicalWorkload) ->
     _ = all_created_users  # temporary line of code to avoid unused import error. This can be deleted as soon as actual users are granted Cloud Courier Permissions below
     create_cloud_courier_permissions(
         workload_info=workload_info,
-        end_users=[all_created_users["eli.fine"]],
-        administrators=[all_created_users["eli.fine"]],
+        end_users=[],
+        administrators=[],
     )
