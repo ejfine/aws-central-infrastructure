@@ -6,7 +6,6 @@ from .lib import AwsLogicalWorkload
 from .lib import GithubOidcConfig
 from .lib import WorkloadName
 from .lib import create_oidc_for_single_account_workload
-from .lib import create_oidc_for_standard_workload
 
 
 def generate_all_oidc(
@@ -22,16 +21,6 @@ def generate_all_oidc(
             repo_org=CENTRAL_INFRA_GITHUB_ORG_NAME,
             repo_name=CENTRAL_INFRA_REPO_NAME,
             role_name_suffix="identity-center",
-        )
-    )
-
-    workload_name = "cloud-courier"
-    cloud_courier_workload = workloads_info[workload_name]
-    all_oidc[workload_name].extend(
-        create_oidc_for_standard_workload(
-            workload_info=cloud_courier_workload,
-            repo_org=CENTRAL_INFRA_GITHUB_ORG_NAME,
-            repo_name="cloud-courier-infrastructure",
         )
     )
 
