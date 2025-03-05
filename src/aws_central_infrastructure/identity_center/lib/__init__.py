@@ -1,4 +1,3 @@
-from .constants import CONFIGURE_CLOUD_COURIER
 from .lib import User
 from .lib import UserInfo
 from .lib import Username
