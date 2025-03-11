@@ -11,3 +11,4 @@ from .permissions import AwsSsoPermissionSet
 from .permissions import AwsSsoPermissionSetAccountAssignments
 from .permissions import AwsSsoPermissionSetContainer
 from .permissions import DefaultWorkloadPermissionAssignments
+from .permissions import create_org_admin_permissions
