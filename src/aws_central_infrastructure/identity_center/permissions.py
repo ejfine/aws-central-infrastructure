@@ -4,6 +4,7 @@ from .lib import LOW_RISK_ADMIN_PERM_SET_CONTAINER
 from .lib import VIEW_ONLY_PERM_SET_CONTAINER
 from .lib import AwsSsoPermissionSetAccountAssignments
 from .lib import all_created_users
+from .lib import create_org_admin_permissions
 from .lib import create_read_state_inline_policy
 
 
@@ -27,3 +28,5 @@ def create_permissions(workloads_dict: dict[str, AwsLogicalWorkload]) -> None:
         permission_set=admin_permission_set,
         users=[all_created_users["eli.fine"]],
     )
+
+    create_org_admin_permissions(workloads_dict=workloads_dict, users=[all_created_users["eli.fine"]])
