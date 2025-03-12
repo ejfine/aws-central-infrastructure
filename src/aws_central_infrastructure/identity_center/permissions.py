@@ -1,17 +1,13 @@
 from aws_central_infrastructure.iac_management.lib import AwsLogicalWorkload
 
 from .lib import LOW_RISK_ADMIN_PERM_SET_CONTAINER
-from .lib import VIEW_ONLY_PERM_SET_CONTAINER
 from .lib import AwsSsoPermissionSetAccountAssignments
 from .lib import all_created_users
 from .lib import create_org_admin_permissions
-from .lib import create_read_state_inline_policy
 
 
 def create_permissions(workloads_dict: dict[str, AwsLogicalWorkload]) -> None:
-    admin_permission_set = LOW_RISK_ADMIN_PERM_SET_CONTAINER.create_permission_set()
-
-    _ = VIEW_ONLY_PERM_SET_CONTAINER.create_permission_set(inline_policy=create_read_state_inline_policy())
+    admin_permission_set = LOW_RISK_ADMIN_PERM_SET_CONTAINER.permission_set
 
     _ = AwsSsoPermissionSetAccountAssignments(
         account_info=workloads_dict["central-infra"].prod_accounts[0],
