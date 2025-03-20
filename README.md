@@ -7,23 +7,29 @@
 
 
 # Usage
-To create a new repository using this template:
-1. Install `copier` and `copier-templates-extensions`. An easy way to do that is to copy the `.devcontainer/install-ci-tooling.sh` script in this repository into your new repo and then run it.
-2. Run copier to instantiate the template: `copier copy --trust gh:LabAutomationAndScreening/copier-aws-central-infrastructure.git`
-3. Run `uv lock` to generate the lock file
-4. Commit the changes
-5. Rebuild your new devcontainer
 
-
-
+## Allowing a git repository to publish a packgae to AWS CodeArtifact
+The file `src/aws_central_infrastructure/artifact_stores/internal_packages.py` contains a list of repositories that are allowed to publish packages to the AWS CodeArtifact registry. To enable a new repository to do so, add a new entry to the `repo_package_claims` list. This ensures that only one git repo has permission to publish that package, and there's no conflicts of two repos overwriting each other's packages.
+At the moment, only Python packages are supported. See https://github.com/LabAutomationAndScreening/copier-aws-central-infrastructure/issues/22 and https://github.com/LabAutomationAndScreening/copier-aws-central-infrastructure/issues/21
 
 
 # Development
 
 ## Using Pulumi
-Run a Pulumi Preview for the IaC Management project: `uv run python -m aws_central_infrastructure.deploy_iac_management --stack=prod`
-Run a Pulumi Preview for the Artifact Stores project: `uv run python -m aws_central_infrastructure.deploy_artifact_stores --stack=prod`
-Run a Pulumi Preview for the Identity Center project: `uv run python -m aws_central_infrastructure.deploy_identity_center --stack=prod`
+Run a Pulumi Preview for the IaC Management project:
+```bash
+uv run python -m aws_central_infrastructure.deploy_iac_management --stack=prod
+```
+
+Run a Pulumi Preview for the Artifact Stores project:
+```bash
+uv run python -m aws_central_infrastructure.deploy_artifact_stores --stack=prod
+```
+
+Run a Pulumi Preview for the Identity Center project:
+```bash
+uv run python -m aws_central_infrastructure.deploy_identity_center --stack=prod
+```
 
 
 ## Updating from the template
