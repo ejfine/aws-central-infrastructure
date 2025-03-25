@@ -63,9 +63,24 @@ jobs:
       AWS_ACCOUNT_ID: "038462771856"
 
 
-  artifact-stores-pulumi:
+  central-networking-pulumi:
     uses: ./.github/workflows/pulumi-aws.yml
     needs: [ iac-management-pulumi ]
+    with:
+      AWS_REGION: us-east-1
+      PULUMI_STACK_NAME: prod
+      PYTHON_VERSION: 3.13.1
+      DEPLOY_SCRIPT_MODULE_NAME: aws_central_infrastructure
+      DEPLOY_SCRIPT_NAME: deploy_central_networking
+      PULUMI_PREVIEW: true
+      PREVIEW_ROLE_NAME: InfraPreview--aws-central-infrastructure
+      PULUMI_UP: ${{ github.ref == 'refs/heads/main' }}
+      PULUMI_UP_ROLE_NAME: InfraDeploy--aws-central-infrastructure
+      AWS_ACCOUNT_ID: "038462771856"
+
+  artifact-stores-pulumi:
+    uses: ./.github/workflows/pulumi-aws.yml
+    needs: [ iac-management-pulumi, central-networking-pulumi ] # spinning up AMI builders depends on central-networking
     with:
       AWS_REGION: us-east-1
       PULUMI_STACK_NAME: prod
@@ -77,6 +92,7 @@ jobs:
       PULUMI_UP: ${{ github.ref == 'refs/heads/main' }}
       PULUMI_UP_ROLE_NAME: InfraDeploy--aws-central-infrastructure
       AWS_ACCOUNT_ID: "038462771856"
+
 
   identity-center-pulumi:
     uses: ./.github/workflows/pulumi-aws.yml
@@ -95,10 +111,10 @@ jobs:
 
   required-check:
     runs-on: ubuntu-24.04
-    needs: [ lint, iac-management-pulumi, artifact-stores-pulumi, identity-center-pulumi ]
+    needs: [ lint, iac-management-pulumi, artifact-stores-pulumi, central-networking-pulumi, identity-center-pulumi ]
     if: always()
     steps:
       - name: fail if prior job failure
-        if: needs.lint.result != 'success' || needs.iac-management-pulumi.result != 'success' || needs.artifact-stores-pulumi.result != 'success' || needs.identity-center-pulumi.result != 'success'
+        if: needs.lint.result != 'success' || needs.iac-management-pulumi.result != 'success' || needs.artifact-stores-pulumi.result != 'success' || needs.central-networking-pulumi.result != 'success' || needs.identity-center-pulumi.result != 'success'
         run: |
           exit 1
