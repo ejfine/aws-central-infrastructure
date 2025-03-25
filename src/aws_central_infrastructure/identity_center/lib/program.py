@@ -14,9 +14,7 @@ from ..cloud_courier_permissions import configure_cloud_courier_permissions
 from ..permissions import create_permissions
 from ..users import create_users
 from .lib import all_created_users
-from .permissions import LOW_RISK_ADMIN_PERM_SET_CONTAINER
-from .permissions import MANUAL_SECRETS_ENTRY_PERM_SET_CONTAINER
-from .permissions import VIEW_ONLY_PERM_SET_CONTAINER
+from .permissions import ALL_PERM_SET_CONTAINERS
 from .permissions import AwsSsoPermissionSet
 from .permissions import AwsSsoPermissionSetAccountAssignments
 
@@ -62,9 +60,9 @@ def pulumi_program() -> None:
     workloads_dict, _ = load_workload_info(exclude_central_infra_workload=False)
     # Note: If you are directly creating users (and not using your external SSO Identity Provider), you must create any new users and deploy them before you can assign any permissions to them (otherwise the Preview will fail)
     create_users()
-    _ = LOW_RISK_ADMIN_PERM_SET_CONTAINER.create_permission_set()
-    _ = MANUAL_SECRETS_ENTRY_PERM_SET_CONTAINER.create_permission_set()
-    _ = VIEW_ONLY_PERM_SET_CONTAINER.create_permission_set()
+    for perm_set_container in ALL_PERM_SET_CONTAINERS:
+        _ = perm_set_container.create_permission_set()
+
     create_all_permissions(workloads_dict)
 
     # Application-specific permissions managed by copier template
