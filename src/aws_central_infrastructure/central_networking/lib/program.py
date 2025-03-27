@@ -15,7 +15,6 @@ logger = logging.getLogger(__name__)
 def pulumi_program() -> None:
     """Execute creating the stack."""
     # Create Resources Here
-    return
     all_providers = AllAccountProviders()
     org_info = get_organization()
 
