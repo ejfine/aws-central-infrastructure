@@ -3,6 +3,8 @@ from typing import Any
 from typing import override
 
 from ephemeral_pulumi_deploy import common_tags
+from lab_auto_pulumi import AwsAccountInfo
+from lab_auto_pulumi import AwsLogicalWorkload
 from pulumi import ComponentResource
 from pulumi import ResourceOptions
 from pulumi_aws import identitystore as identitystore_classic
@@ -12,9 +14,6 @@ from pulumi_aws.iam import GetPolicyDocumentStatementConditionArgs
 from pulumi_aws.iam import get_policy_document
 from pydantic import BaseModel
 from pydantic import Field
-
-from aws_central_infrastructure.iac_management.lib.shared_lib import AwsAccountInfo
-from aws_central_infrastructure.iac_management.lib.shared_lib import AwsLogicalWorkload
 
 from .lib import ORG_INFO
 from .lib import UserAttributes
@@ -201,7 +200,13 @@ EC2_SSO_PER_SET_CONTAINER = AwsSsoPermissionSetContainer(  # based on https://aw
             GetPolicyDocumentStatementArgs(
                 sid="EC2Management",
                 effect="Allow",
-                actions=["ec2:StartInstances", "ec2:StopInstances", "ec2:RebootInstances", "ec2:GetConsoleOutput"],
+                actions=[
+                    "ec2:StartInstances",
+                    "ec2:StopInstances",
+                    "ec2:RebootInstances",
+                    "ec2:GetConsoleOutput",
+                    "ssm:GetConnectionStatus",
+                ],
                 resources=["arn:aws:ec2:*:*:instance/*"],
                 conditions=[
                     GetPolicyDocumentStatementConditionArgs(
@@ -217,7 +222,7 @@ EC2_SSO_PER_SET_CONTAINER = AwsSsoPermissionSetContainer(  # based on https://aw
                     "ssm:DescribeInstanceProperties",
                     "ssm:GetCommandInvocation",
                     "ssm:GetInventorySchema",
-                    "ssm:DescribeInstancesInformation",
+                    "ssm:DescribeInstanceInformation",
                 ],
                 resources=["*"],
             ),
