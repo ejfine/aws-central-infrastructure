@@ -47,9 +47,24 @@ jobs:
       - name: Run pre-commit
         run:  pre-commit run -a
 
+  unit-test:
+    needs: [ lint ]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+
+      - name: Install latest versions of python packages
+        uses: ./.github/actions/install_deps_uv
+        with:
+          python-version: 3.13.1
+
+      - name: Unit test
+        run: uv run pytest tests/unit --cov-report=xml --durations=5
+
   iac-management-pulumi:
     uses: ./.github/workflows/pulumi-aws.yml
-    needs: [ lint ]
+    needs: [ unit-test ]
     with:
       AWS_REGION: us-east-1
       PULUMI_STACK_NAME: prod
@@ -111,10 +126,10 @@ jobs:
 
   required-check:
     runs-on: ubuntu-24.04
-    needs: [ lint, iac-management-pulumi, artifact-stores-pulumi, central-networking-pulumi, identity-center-pulumi ]
+    needs: [ lint, unit-test, iac-management-pulumi, artifact-stores-pulumi, central-networking-pulumi, identity-center-pulumi ]
     if: always()
     steps:
       - name: fail if prior job failure
-        if: needs.lint.result != 'success' || needs.iac-management-pulumi.result != 'success' || needs.artifact-stores-pulumi.result != 'success' || needs.central-networking-pulumi.result != 'success' || needs.identity-center-pulumi.result != 'success'
+        if: needs.lint.result != 'success' || needs.unit-test.result != 'success' || needs.iac-management-pulumi.result != 'success' || needs.artifact-stores-pulumi.result != 'success' || needs.central-networking-pulumi.result != 'success' || needs.identity-center-pulumi.result != 'success'
         run: |
           exit 1
