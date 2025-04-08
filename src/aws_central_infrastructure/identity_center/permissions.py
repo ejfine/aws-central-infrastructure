@@ -2,6 +2,7 @@ from lab_auto_pulumi import AwsLogicalWorkload
 
 from .lib import LOW_RISK_ADMIN_PERM_SET_CONTAINER
 from .lib import AwsSsoPermissionSetAccountAssignments
+from .lib import DefaultWorkloadPermissionAssignments
 from .lib import all_created_users
 from .lib import create_org_admin_permissions
 
@@ -26,3 +27,8 @@ def create_permissions(workloads_dict: dict[str, AwsLogicalWorkload]) -> None:
     )
 
     create_org_admin_permissions(workloads_dict=workloads_dict, users=[all_created_users["eli.fine"]])
+
+    _ = DefaultWorkloadPermissionAssignments(
+        workload_info=workloads_dict["elifine-com"],
+        users=[all_created_users["eli.fine"]],
+    )
