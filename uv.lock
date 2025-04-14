@@ -54,13 +54,13 @@ requires-dist = [
     { name = "boto3", specifier = ">=1.37.11" },
     { name = "boto3-stubs", extras = ["all"], specifier = "==1.36.3" },
     { name = "ephemeral-pulumi-deploy", specifier = ">=0.0.4" },
-    { name = "lab-auto-pulumi", specifier = ">=0.1.6" },
-    { name = "pulumi", specifier = ">=3.160.0" },
-    { name = "pulumi-aws", specifier = ">=6.74.0" },
-    { name = "pulumi-aws-native", specifier = ">=1.26.0" },
+    { name = "lab-auto-pulumi", specifier = ">=0.1.8" },
+    { name = "pulumi", specifier = ">=3.162.0" },
+    { name = "pulumi-aws", specifier = ">=6.77.0" },
+    { name = "pulumi-aws-native", specifier = ">=1.27.0" },
     { name = "pulumi-command", specifier = ">=1.0.2" },
     { name = "pydantic", specifier = ">=2.11.1" },
-    { name = "pyright", specifier = ">=1.1.398" },
+    { name = "pyright", specifier = ">=1.1.399" },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "pytest-cov", specifier = ">=6.0.0" },
     { name = "pytest-randomly", specifier = ">=3.16.0" },
@@ -4344,7 +4344,7 @@ wheels = [
 
 [[package]]
 name = "pulumi"
-version = "3.160.0"
+version = "3.162.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "debugpy" },
@@ -4354,38 +4354,37 @@ dependencies = [
     { name = "protobuf" },
     { name = "pyyaml" },
     { name = "semver" },
-    { name = "six" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/2e/6a/31447e24e6c247fbba6c378697735235ef63736ebfa04fcf2c9dd8a4321d/pulumi-3.160.0-py3-none-any.whl", hash = "sha256:6fd6be28003431a736b0d85a20b86bbd0f0cd0adfed78438abbb156122c1c1f8", size = 326834 },
+    { url = "https://files.pythonhosted.org/packages/02/2e/67829e4f30c681fc65c6dffa9741c352f7d9e386c3513ac889a2e1ea2651/pulumi-3.162.0-py3-none-any.whl", hash = "sha256:b4d2049e286c18f1feac5b7a0c1537649048e94e0fbc0c5993215168536ce05a", size = 328026 },
 ]
 
 [[package]]
 name = "pulumi-aws"
-version = "6.74.0"
+version = "6.77.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "parver" },
     { name = "pulumi" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/4f/65/0f05a691cc32ccf1f1ecdb1f1eaffc160ffada26f4f36a280639b98e4863/pulumi_aws-6.74.0.tar.gz", hash = "sha256:f0e5b1e53eaa8ebde2238f1d8ffaafbf9038c60dc34db1ce23d9e7b439c23bc5", size = 7526426 }
+sdist = { url = "https://files.pythonhosted.org/packages/e7/4f/37b9cbf766f3b99c56231a23ed0c8985f8546575ea3925552cc3ffc5bd11/pulumi_aws-6.77.0.tar.gz", hash = "sha256:14db1306a2e1c198d8ea498be925e329ea922221d1e2401bc3294740ec754e0e", size = 7638188 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/01/09/f76b199a304d01e92ba972704c054c78987166d34390d6772bde56a5b6a5/pulumi_aws-6.74.0-py3-none-any.whl", hash = "sha256:d3d46ce7297dcb5132cdbfb9a576e736df2149e39bdb9dffcd256d173092cb8f", size = 10269718 },
+    { url = "https://files.pythonhosted.org/packages/6a/77/65e7f449680a8183d050fd4b8e82d9686b84616a7b27a1c2a25507984e1a/pulumi_aws-6.77.0-py3-none-any.whl", hash = "sha256:d7cf504c269ab91bdfe0c4bdd0489065ae2dba6e9ec566118165a6d14446e530", size = 10380152 },
 ]
 
 [[package]]
 name = "pulumi-aws-native"
-version = "1.26.0"
+version = "1.27.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "parver" },
     { name = "pulumi" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/aa/e3/a63582bda7c76a8e8dbaaf74e702db11b87361cf810c7d42f600a01a065b/pulumi_aws_native-1.26.0.tar.gz", hash = "sha256:7ac5a8ae5e2cecaee1ea739569d19d7f70b0daee38b5e8ca59eaa7b02fd1336d", size = 7095545 }
+sdist = { url = "https://files.pythonhosted.org/packages/32/5d/004692ffc82a7115e6338927b37f1a0313c5270109797e110763097e09f2/pulumi_aws_native-1.27.0.tar.gz", hash = "sha256:488e036d286918eea8145c388f6d015a13d2ebf9e8df0dac7ef068e359132977", size = 7211948 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/74/f4/d116c236492574ef64ab477c5ff8ab503563324d11cec5e1ef9205b0ac09/pulumi_aws_native-1.26.0-py3-none-any.whl", hash = "sha256:a4de06c93698447a78bb1500cd6b5d7e7c5cb85146367b5da2ff8b5549743295", size = 10069831 },
+    { url = "https://files.pythonhosted.org/packages/76/c4/d0bd8a6cd5145d39ddbafcba690f6d6d8ff38e37c0b2bfcac5c305e5c90c/pulumi_aws_native-1.27.0-py3-none-any.whl", hash = "sha256:cc5803dc5d683b5081a5b102ee437fea67cff47c7cb17b8cf90b29f74773a94e", size = 10230364 },
 ]
 
 [[package]]
@@ -4447,15 +4446,15 @@ wheels = [
 
 [[package]]
 name = "pyright"
-version = "1.1.398"
+version = "1.1.399"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "nodeenv" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/24/d6/48740f1d029e9fc4194880d1ad03dcf0ba3a8f802e0e166b8f63350b3584/pyright-1.1.398.tar.gz", hash = "sha256:357a13edd9be8082dc73be51190913e475fa41a6efb6ec0d4b7aab3bc11638d8", size = 3892675 }
+sdist = { url = "https://files.pythonhosted.org/packages/db/9d/d91d5f6d26b2db95476fefc772e2b9a16d54c6bd0ea6bb5c1b6d635ab8b4/pyright-1.1.399.tar.gz", hash = "sha256:439035d707a36c3d1b443aec980bc37053fbda88158eded24b8eedcf1c7b7a1b", size = 3856954 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/58/e0/5283593f61b3c525d6d7e94cfb6b3ded20b3df66e953acaf7bb4f23b3f6e/pyright-1.1.398-py3-none-any.whl", hash = "sha256:0a70bfd007d9ea7de1cf9740e1ad1a40a122592cfe22a3f6791b06162ad08753", size = 5780235 },
+    { url = "https://files.pythonhosted.org/packages/2f/b5/380380c9e7a534cb1783c70c3e8ac6d1193c599650a55838d0557586796e/pyright-1.1.399-py3-none-any.whl", hash = "sha256:55f9a875ddf23c9698f24208c764465ffdfd38be6265f7faf9a176e1dc549f3b", size = 5592584 },
 ]
 
 [[package]]
