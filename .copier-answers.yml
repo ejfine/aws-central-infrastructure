@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier
-_commit: v0.0.36
+_commit: v0.0.39
 _src_path: gh:LabAutomationAndScreening/copier-aws-central-infrastructure.git
 aws_identity_center_id: d-9067c20053
 aws_org_home_region: us-east-1
