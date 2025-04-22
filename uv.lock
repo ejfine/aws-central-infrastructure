@@ -54,7 +54,7 @@ requires-dist = [
     { name = "boto3", specifier = ">=1.37.11" },
     { name = "boto3-stubs", extras = ["all"], specifier = "==1.36.3" },
     { name = "ephemeral-pulumi-deploy", specifier = ">=0.0.4" },
-    { name = "lab-auto-pulumi", specifier = ">=0.1.8" },
+    { name = "lab-auto-pulumi", specifier = ">=0.1.10" },
     { name = "pulumi", specifier = ">=3.162.0" },
     { name = "pulumi-aws", specifier = ">=6.77.0" },
     { name = "pulumi-aws-native", specifier = ">=1.27.0" },
@@ -637,7 +637,7 @@ wheels = [
 
 [[package]]
 name = "lab-auto-pulumi"
-version = "0.1.8"
+version = "0.1.10"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "boto3" },
@@ -647,9 +647,9 @@ dependencies = [
     { name = "pulumi-aws-native" },
     { name = "pydantic" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c3/e8/aedc10a46addb2e0f86e507ed7bba43a870fc99324fec72c944e1cb74a84/lab_auto_pulumi-0.1.8.tar.gz", hash = "sha256:c6f0b3e06b92e3a1a409839d8736a1d6ba6ec3b9b548f89a1e23c1ae01d627cb", size = 8586 }
+sdist = { url = "https://files.pythonhosted.org/packages/27/64/9b44ae3961f2d34eb0258dcb5ab86d4673bba3376c0c900231358cee7039/lab_auto_pulumi-0.1.10.tar.gz", hash = "sha256:1c9ce44c6b5bd7198c6c20664998d5a6d0f3e64179d114dada078bdf5051b770", size = 9117 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4c/9b/58ab29ea1bbe99a971abb0283380af77545ce8c4b49661e519985128069c/lab_auto_pulumi-0.1.8-py3-none-any.whl", hash = "sha256:6e98d6cc7e431a9b558105d928eea3f067e975926652021641d94100ce80ad0f", size = 9216 },
+    { url = "https://files.pythonhosted.org/packages/33/fe/9f206817eafebc701b5c7b3189574dfbc704b8be41536d02ac8a632dfa53/lab_auto_pulumi-0.1.10-py3-none-any.whl", hash = "sha256:65c06b11614bf0a7ae88793ab0f4cc7da9b6128244f969a4b3b605e45750d11b", size = 9786 },
 ]
 
 [[package]]

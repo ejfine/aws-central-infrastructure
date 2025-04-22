@@ -69,8 +69,8 @@ jobs:
       AWS_REGION: us-east-1
       PULUMI_STACK_NAME: prod
       PYTHON_VERSION: 3.13.1
-      DEPLOY_SCRIPT_MODULE_NAME: aws_central_infrastructure
-      DEPLOY_SCRIPT_NAME: deploy_iac_management
+      DEPLOY_SCRIPT_MODULE_NAME: aws_central_infrastructure.iac_management.lib
+      DEPLOY_SCRIPT_NAME: pulumi_deploy
       PULUMI_PREVIEW: true
       PREVIEW_ROLE_NAME: InfraPreview--aws-central-infrastructure
       PULUMI_UP: ${{ github.ref == 'refs/heads/main' }}
@@ -85,8 +85,8 @@ jobs:
       AWS_REGION: us-east-1
       PULUMI_STACK_NAME: prod
       PYTHON_VERSION: 3.13.1
-      DEPLOY_SCRIPT_MODULE_NAME: aws_central_infrastructure
-      DEPLOY_SCRIPT_NAME: deploy_central_networking
+      DEPLOY_SCRIPT_MODULE_NAME: aws_central_infrastructure.central_networking.lib
+      DEPLOY_SCRIPT_NAME: pulumi_deploy
       PULUMI_PREVIEW: true
       PREVIEW_ROLE_NAME: InfraPreview--aws-central-infrastructure
       PULUMI_UP: ${{ github.ref == 'refs/heads/main' }}
@@ -100,8 +100,8 @@ jobs:
       AWS_REGION: us-east-1
       PULUMI_STACK_NAME: prod
       PYTHON_VERSION: 3.13.1
-      DEPLOY_SCRIPT_MODULE_NAME: aws_central_infrastructure
-      DEPLOY_SCRIPT_NAME: deploy_artifact_stores
+      DEPLOY_SCRIPT_MODULE_NAME: aws_central_infrastructure.artifact_stores.lib
+      DEPLOY_SCRIPT_NAME: pulumi_deploy
       PULUMI_PREVIEW: true
       PREVIEW_ROLE_NAME: InfraPreview--aws-central-infrastructure
       PULUMI_UP: ${{ github.ref == 'refs/heads/main' }}
@@ -116,8 +116,8 @@ jobs:
       AWS_REGION: us-east-1
       PULUMI_STACK_NAME: prod
       PYTHON_VERSION: 3.13.1
-      DEPLOY_SCRIPT_MODULE_NAME: aws_central_infrastructure
-      DEPLOY_SCRIPT_NAME: deploy_identity_center
+      DEPLOY_SCRIPT_MODULE_NAME: aws_central_infrastructure.identity_center.lib
+      DEPLOY_SCRIPT_NAME: pulumi_deploy
       PULUMI_PREVIEW: true
       PREVIEW_ROLE_NAME: InfraPreview--aws-central-infrastructure--identity-center
       PULUMI_UP: ${{ github.ref == 'refs/heads/main' }}
