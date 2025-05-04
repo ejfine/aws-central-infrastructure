@@ -32,3 +32,8 @@ def create_permissions(workloads_dict: dict[str, AwsLogicalWorkload]) -> None:
         workload_info=workloads_dict["elifine-com"],
         users=[all_created_users["eli.fine"]],
     )
+    _ = AwsSsoPermissionSetAccountAssignments(
+        account_info=workloads_dict["elifine-com"].prod_accounts[0],
+        permission_set=admin_permission_set,
+        users=[all_created_users["eli.fine"]],
+    )
