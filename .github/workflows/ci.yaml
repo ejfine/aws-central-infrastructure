@@ -21,6 +21,8 @@ jobs:
 
   lint:
     needs: [ get-values ]
+    env:
+      BLARG: ${{ secrets.BLARG }}
     name: Pre-commit
     uses: ./.github/workflows/pre-commit.yaml
     with:
