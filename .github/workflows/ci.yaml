@@ -21,8 +21,6 @@ jobs:
 
   lint:
     needs: [ get-values ]
-    env:
-      BLARG: ${{ secrets.BLARG }}
     name: Pre-commit
     uses: ./.github/workflows/pre-commit.yaml
     with:
@@ -31,6 +29,8 @@ jobs:
   unit-test:
     needs: [ lint ]
     runs-on: ubuntu-24.04
+    env:
+      BLARG: ${{ secrets.BLARG }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.2.2
