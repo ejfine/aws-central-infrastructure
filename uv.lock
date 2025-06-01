@@ -60,7 +60,7 @@ requires-dist = [
     { name = "pulumi-aws", specifier = ">=6.81.0" },
     { name = "pulumi-aws-native", specifier = ">=1.27.0" },
     { name = "pulumi-command", specifier = ">=1.1.0" },
-    { name = "pulumi-github", specifier = ">=6.7.0" },
+    { name = "pulumi-github", specifier = ">=6.7.2" },
     { name = "pydantic", specifier = ">=2.11.5" },
     { name = "pyright", specifier = "==1.1.400" },
     { name = "pytest", specifier = ">=8.3.5" },
