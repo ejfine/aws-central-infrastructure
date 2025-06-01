@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier
-_commit: v0.0.51
+_commit: v0.0.51-1-g91c8a81
 _src_path: gh:LabAutomationAndScreening/copier-aws-central-infrastructure.git
 aws_identity_center_id: d-9067c20053
 aws_org_home_region: us-east-1
@@ -24,6 +24,7 @@ python_version: 3.13.1
 repo_name: aws-central-infrastructure
 repo_org_name: ejfine
 ssh_port_number: 52368
+use_repo_secret_for_github_iac_tokens: true
 use_staging_environment: false
 use_windows_in_ci: false
 
