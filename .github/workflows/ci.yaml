@@ -70,8 +70,9 @@ jobs:
       PULUMI_UP: ${{ github.ref == 'refs/heads/main' }}
       PULUMI_UP_ROLE_NAME: InfraDeploy--aws-central-infrastructure
       AWS_ACCOUNT_ID: "038462771856"
-      iac-github-api-tokens: ${{ secrets.IAC-GITHUB-API-TOKENS }}
       ADDITIONAL_MUTEX_SUFFIX: github
+    secrets:
+      iac-github-api-tokens: ${{ secrets.IAC_GITHUB_API_TOKENS }}
 
   central-networking-pulumi:
     uses: ./.github/workflows/pulumi-aws.yml
