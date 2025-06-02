@@ -15,3 +15,11 @@ def create_repo_configs(configs: list[GithubRepoConfig]):
             visibility="public",
         )
     )
+    configs.append(
+        GithubRepoConfig(
+            name="ephemeral-pulumi-deploy",
+            description="Be able to easy spin up and down ephemeral Pulumi stacks",
+            org_admin_rule_bypass=True,
+            visibility="public",
+        )
+    )
