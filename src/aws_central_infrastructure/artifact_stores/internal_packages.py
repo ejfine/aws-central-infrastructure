@@ -18,3 +18,6 @@ def create_internal_packages_configs(repo_package_claims: list[RepoPackageClaims
             publish_to_public_registry=True,
         )
     )
+    repo_package_claims.append(
+        RepoPackageClaims(repo_name="pyalab", pypi_package_names={"pyalab"}, publish_to_public_registry=True)
+    )
