@@ -56,6 +56,23 @@ jobs:
       PULUMI_UP_ROLE_NAME: InfraDeploy--aws-central-infrastructure
       AWS_ACCOUNT_ID: "038462771856"
 
+  github-repos-pulumi:
+    uses: ./.github/workflows/pulumi-aws.yml
+    needs: [ unit-test ]
+    with:
+      AWS_REGION: us-east-1
+      PULUMI_STACK_NAME: prod
+      PYTHON_VERSION: 3.13.1
+      DEPLOY_SCRIPT_MODULE_NAME: aws_central_infrastructure.github_repos.lib
+      DEPLOY_SCRIPT_NAME: pulumi_deploy
+      PULUMI_PREVIEW: true
+      PREVIEW_ROLE_NAME: InfraPreview--aws-central-infrastructure
+      PULUMI_UP: ${{ github.ref == 'refs/heads/main' }}
+      PULUMI_UP_ROLE_NAME: InfraDeploy--aws-central-infrastructure
+      AWS_ACCOUNT_ID: "038462771856"
+      ADDITIONAL_MUTEX_SUFFIX: github
+    secrets:
+      iac-github-api-tokens: ${{ secrets.IAC_GITHUB_API_TOKENS }}
 
   central-networking-pulumi:
     uses: ./.github/workflows/pulumi-aws.yml
@@ -111,10 +128,11 @@ jobs:
       - artifact-stores-pulumi
       - central-networking-pulumi
       - identity-center-pulumi
+      - github-repos-pulumi
     if: always()
     steps:
       - name: fail if prior job failure
-        if: needs.iac-management-pulumi.result != 'success' || needs.artifact-stores-pulumi.result != 'success' || needs.central-networking-pulumi.result != 'success' || needs.identity-center-pulumi.result != 'success'
+        if: needs.iac-management-pulumi.result != 'success' || needs.artifact-stores-pulumi.result != 'success' || needs.central-networking-pulumi.result != 'success' || needs.identity-center-pulumi.result != 'success' || needs.github-repos-pulumi.result != 'success'
         run: |
           exit 1
       - name: Mark updated Dependabot commit of devcontainer hash as succeeded

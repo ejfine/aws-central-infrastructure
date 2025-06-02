@@ -7,6 +7,34 @@
 
 
 # Usage
+## Managing your company's GitHub Organization
+### Repositories
+The file `src/aws_central_infrastructure/github_repos/repos.py` contains a list of repositories that are managed by this project. To add a new repository, add a new entry to the `configs` list. You'll also likely want to grant at least one Team some permissions to use this new repository (see section below on Teams).
+
+If you want to allow many people to contribute via `push` access, but still gate Pull Requests with approvals from a smaller subset of people, you can create a CODEOWNERS file within your repository to distinguish which Teams have the ability to approve Pull Requests.
+
+### Teams
+The file `src/aws_central_infrastructure/github_repos/teams.py` contains a list of teams that are managed by this project. To add a new team, add a new entry to the `configs` list.
+Ensure to assign it appropriate permissions (typically `push`...sometimes referred to as `write` in other contexts) for the repositories it needs access to.
+Teams can have a parent, from which they inherit permissions. This is useful for creating a hierarchy of teams.
+If an explicit parent is not provided in the configuration, the team will have the root `Everyone` team as its parent.
+
+You can grant a Team permissions for a repository even if that repository was not created using this process.
+
+### External Collaborators
+The file `src/aws_central_infrastructure/github_repos/collaborators.py` contains a list of external collaborators that are managed by this project. To add a new collaborator, add a new entry to the `configs` list.
+Ensure to assign them appropriate permissions (typically `push`...sometimes referred to as `write` in other contexts) for the repositories they needs access to.
+
+You can grant a Collaborator permissions for a repository even if that repository was not created using this process.
+
+### Initial configuration for Github organization
+It's recommended to set the following permissions for the Organization to guide people towards doing more things via this repository instead of the Console.
+https://github.com/organizations/lab-sync/settings/member_privileges
+
+* Base Permissions: Read
+* Repository Creation: Neither
+* Pages Creation: Neither
+* Allow members to create teams: No
 
 ## Allowing a git repository to publish a package to AWS CodeArtifact
 The file `src/aws_central_infrastructure/artifact_stores/internal_packages.py` contains a list of repositories that are allowed to publish packages to the AWS CodeArtifact registry. To enable a new repository to do so, add a new entry to the `repo_package_claims` list. This ensures that only one git repo has permission to publish that package, and there's no conflicts of two repos overwriting each other's packages.
@@ -37,6 +65,11 @@ uv run python -m aws_central_infrastructure.central_networking.lib.pulumi_deploy
 Run a Pulumi Preview for the Identity Center project:
 ```bash
 uv run python -m aws_central_infrastructure.identity_center.lib.pulumi_deploy --stack=prod
+```
+
+Run a Pulumi Preview for the GitHub Repositories project:
+```bash
+uv run python -m aws_central_infrastructure.github_repos.lib.pulumi_deploy --stack=prod
 ```
 
 
