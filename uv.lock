@@ -53,7 +53,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "boto3", specifier = ">=1.38.18" },
-    { name = "boto3-stubs", extras = ["all"], specifier = "==1.38.18" },
+    { name = "boto3-stubs", extras = ["all"], specifier = "==1.38.27" },
     { name = "ephemeral-pulumi-deploy", specifier = ">=0.0.4" },
     { name = "lab-auto-pulumi", specifier = ">=0.1.12" },
     { name = "pulumi", specifier = ">=3.171.0" },
@@ -62,7 +62,7 @@ requires-dist = [
     { name = "pulumi-command", specifier = ">=1.1.0" },
     { name = "pulumi-github", specifier = ">=6.7.2" },
     { name = "pydantic", specifier = ">=2.11.5" },
-    { name = "pyright", specifier = "==1.1.400" },
+    { name = "pyright", specifier = "==1.1.401" },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "pytest-cov", specifier = ">=6.1.1" },
     { name = "pytest-randomly", specifier = ">=3.16.0" },
@@ -84,15 +84,15 @@ wheels = [
 
 [[package]]
 name = "boto3-stubs"
-version = "1.38.18"
+version = "1.38.27"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "botocore-stubs" },
     { name = "types-s3transfer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f8/df/b5ebe11b488ad832f71e87875f45417576c452bc957658598486af3448ab/boto3_stubs-1.38.18.tar.gz", hash = "sha256:e219f8fd7b31f6d1da3166a604c6b3156b4666ad8e1b08fe58256ed943f35a91", size = 99283, upload-time = "2025-05-16T21:10:47.404Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e5/f1/e917a83c6c86a42fa09f1e20d2d4f9af2de8fedcf88a5f2297ae11236e4a/boto3_stubs-1.38.27.tar.gz", hash = "sha256:8a45f32b83d29ec3db28b37ea68ea5f179b141863211497ef92ba18e2a896aec", size = 99063, upload-time = "2025-05-30T19:42:34.374Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/49/e2/c79fdfbfdda5c809cff3159eb51eb51a13851aa4f99c2315933b177524a5/boto3_stubs-1.38.18-py3-none-any.whl", hash = "sha256:9c9cf2849890305997701dc828aefce53aa35f88b3627dc8a76520cc2b995ed0", size = 68779, upload-time = "2025-05-16T21:10:42.164Z" },
+    { url = "https://files.pythonhosted.org/packages/ae/70/3d8921e287660757d60b023fd18887950b6ddd44ce48c0ffd9f6632c1ac3/boto3_stubs-1.38.27-py3-none-any.whl", hash = "sha256:87e6c47b76173df91f55387a91fd1f382f130821e4492e14748fe49d46598bc5", size = 68668, upload-time = "2025-05-30T19:42:29.384Z" },
 ]
 
 [package.optional-dependencies]
@@ -393,7 +393,6 @@ all = [
     { name = "mypy-boto3-pipes" },
     { name = "mypy-boto3-polly" },
     { name = "mypy-boto3-pricing" },
-    { name = "mypy-boto3-privatenetworks" },
     { name = "mypy-boto3-proton" },
     { name = "mypy-boto3-qapps" },
     { name = "mypy-boto3-qbusiness" },
@@ -3320,15 +3319,6 @@ wheels = [
 ]
 
 [[package]]
-name = "mypy-boto3-privatenetworks"
-version = "1.38.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/82/f5/e93a62c22f342339484e32b38c20588cd32a9dcd2819a7ab23aa0e2d8824/mypy_boto3_privatenetworks-1.38.0.tar.gz", hash = "sha256:4f4e227100be5f041985a004056462a9f09469ac973f5b33a5b2dd006ffbb779", size = 20869, upload-time = "2025-04-22T21:31:45.947Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/59/e1/4e398cc0269ba531d5d9ab952cb37fcc1608ccfbdf96d4c4ad56e0f5ee82/mypy_boto3_privatenetworks-1.38.0-py3-none-any.whl", hash = "sha256:7f4e83dce9ca76fb94b8ba05caf93dcaeaa68a5f38feca892ac0bec9622d147d", size = 28459, upload-time = "2025-04-22T21:31:44.622Z" },
-]
-
-[[package]]
 name = "mypy-boto3-proton"
 version = "1.38.0"
 source = { registry = "https://pypi.org/simple" }
@@ -4472,15 +4462,15 @@ wheels = [
 
 [[package]]
 name = "pyright"
-version = "1.1.400"
+version = "1.1.401"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "nodeenv" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/6c/cb/c306618a02d0ee8aed5fb8d0fe0ecfed0dbf075f71468f03a30b5f4e1fe0/pyright-1.1.400.tar.gz", hash = "sha256:b8a3ba40481aa47ba08ffb3228e821d22f7d391f83609211335858bf05686bdb", size = 3846546, upload-time = "2025-04-24T12:55:18.907Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/79/9a/7ab2b333b921b2d6bfcffe05a0e0a0bbeff884bd6fb5ed50cd68e2898e53/pyright-1.1.401.tar.gz", hash = "sha256:788a82b6611fa5e34a326a921d86d898768cddf59edde8e93e56087d277cc6f1", size = 3894193, upload-time = "2025-05-21T10:44:52.03Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c8/a5/5d285e4932cf149c90e3c425610c5efaea005475d5f96f1bfdb452956c62/pyright-1.1.400-py3-none-any.whl", hash = "sha256:c80d04f98b5a4358ad3a35e241dbf2a408eee33a40779df365644f8054d2517e", size = 5563460, upload-time = "2025-04-24T12:55:17.002Z" },
+    { url = "https://files.pythonhosted.org/packages/0d/e6/1f908fce68b0401d41580e0f9acc4c3d1b248adcff00dfaad75cd21a1370/pyright-1.1.401-py3-none-any.whl", hash = "sha256:6fde30492ba5b0d7667c16ecaf6c699fab8d7a1263f6a18549e0b00bf7724c06", size = 5629193, upload-time = "2025-05-21T10:44:50.129Z" },
 ]
 
 [[package]]
