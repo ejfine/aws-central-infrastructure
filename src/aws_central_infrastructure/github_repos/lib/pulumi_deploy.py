@@ -20,7 +20,9 @@ def generate_stack_config() -> dict[str, Any]:
 
     stack_config["proj:git_repository_url"] = ConfigValue(value=f"https://github.com/ejfine/{github_repo_name}")
 
-    stack_config["github:owner"] = ConfigValue(value="ejfine")
+    stack_config["github:owner"] = ConfigValue(
+        value="LabAutomationAndScreening"
+    )  # at the moment, this is only used to manage the github repos for LabAutomation And Screening org
     return stack_config
 
 
