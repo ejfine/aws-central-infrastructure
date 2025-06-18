@@ -29,7 +29,7 @@ You can grant a Collaborator permissions for a repository even if that repositor
 
 ### Initial configuration for Github organization
 It's recommended to set the following permissions for the Organization to guide people towards doing more things via this repository instead of the Console.
-https://github.com/organizations/lab-sync/settings/member_privileges
+https://github.com/organizations/ejfine/settings/member_privileges
 
 * Base Permissions: Read
 * Repository Creation: Neither
