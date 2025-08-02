@@ -36,6 +36,11 @@ https://github.com/organizations/ejfine/settings/member_privileges
 * Pages Creation: Neither
 * Allow members to create teams: No
 
+You'll need to create a Personal Access Token (PAT) to allow Pulumi to manage the GitHub Organization.
+
+Token permissions needed: All repositories, Administration: Read & write, Environments: Read & write, Contents: read & write.  Organization: Members Read&Write
+In the repository settings, create both a Repository Secret and a Dependabot Secret with the name `IAC_GITHUB_API_TOKENS`. The value of the secret should be formatted like this: `{"org_tokens": {"MyGithubOrganizationName": {"deploy_token": "my-deploy-token"}}}`
+
 ## Allowing a git repository to publish a package to AWS CodeArtifact
 The file `src/aws_central_infrastructure/artifact_stores/internal_packages.py` contains a list of repositories that are allowed to publish packages to the AWS CodeArtifact registry. To enable a new repository to do so, add a new entry to the `repo_package_claims` list. This ensures that only one git repo has permission to publish that package, and there's no conflicts of two repos overwriting each other's packages.
 At the moment, only Python packages are supported. See https://github.com/LabAutomationAndScreening/copier-aws-central-infrastructure/issues/22 and https://github.com/LabAutomationAndScreening/copier-aws-central-infrastructure/issues/21
