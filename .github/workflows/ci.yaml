@@ -47,6 +47,8 @@ jobs:
 
   iac-management-pulumi:
     uses: ./.github/workflows/pulumi-aws.yml
+    permissions:
+      contents: write # needed for mutex
     needs: [ unit-test ]
     with:
       AWS_REGION: us-east-1
@@ -62,6 +64,8 @@ jobs:
 
   github-repos-pulumi:
     uses: ./.github/workflows/pulumi-aws.yml
+    permissions:
+      contents: write # needed for mutex
     needs: [ unit-test ]
     with:
       AWS_REGION: us-east-1
@@ -80,6 +84,8 @@ jobs:
 
   central-networking-pulumi:
     uses: ./.github/workflows/pulumi-aws.yml
+    permissions:
+      contents: write # needed for mutex
     needs: [ iac-management-pulumi ]
     with:
       AWS_REGION: us-east-1
@@ -95,6 +101,8 @@ jobs:
 
   artifact-stores-pulumi:
     uses: ./.github/workflows/pulumi-aws.yml
+    permissions:
+      contents: write # needed for mutex
     needs: [ iac-management-pulumi, central-networking-pulumi ] # spinning up AMI builders depends on central-networking
     with:
       AWS_REGION: us-east-1
@@ -111,6 +119,8 @@ jobs:
 
   identity-center-pulumi:
     uses: ./.github/workflows/pulumi-aws.yml
+    permissions:
+      contents: write # needed for mutex
     needs: [ iac-management-pulumi, artifact-stores-pulumi ] # Identity Center depends on outputs from the Artifact Stores stack to set up permission sets
     with:
       AWS_REGION: us-east-1
