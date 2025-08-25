@@ -11,11 +11,11 @@ dependencies = [
 
 
     # Managed by upstream template
-    "pyright==1.1.403", # temporarily pin due to bug in 1.1.401 https://github.com/microsoft/pyright/issues/10487
+    "pyright==1.1.404", # temporarily pin due to bug in 1.1.401 https://github.com/microsoft/pyright/issues/10487
     "pytest>=8.4.1",
     "pytest-cov>=6.2.1",
     "pytest-randomly>=3.16.0",
-    "pulumi>=3.189.0",
+    "pulumi>=3.190.0",
     "pulumi-aws>=7.4.0",
     "pulumi-aws-native>=1.32.0",
     "pulumi-command>=1.1.0",
