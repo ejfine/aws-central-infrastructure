@@ -11,19 +11,19 @@ dependencies = [
 
 
     # Managed by upstream template
-    "pyright==1.1.403", # temporarily pin due to bug in 1.1.401 https://github.com/microsoft/pyright/issues/10487
+    "pyright>=1.1.404",
     "pytest>=8.4.1",
     "pytest-cov>=6.2.1",
     "pytest-randomly>=3.16.0",
-    "pulumi>=3.186.0",
-    "pulumi-aws>=7.1.0",
-    "pulumi-aws-native>=1.31.0",
+    "pulumi>=3.190.0",
+    "pulumi-aws>=7.4.0",
+    "pulumi-aws-native>=1.32.0",
     "pulumi-command>=1.1.0",
     "pulumi-github>=6.7.3",
     "ephemeral-pulumi-deploy>=0.0.4",
     "lab-auto-pulumi>=0.1.15",
-    "boto3>=1.39.14",
-    "boto3-stubs[all]==1.39.14",
+    "boto3>=1.40.9",
+    "boto3-stubs[all]>=1.40.9",
     "pydantic>=2.11.7",
 ]
 
