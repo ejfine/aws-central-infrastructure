@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier
-_commit: v0.0.58
+_commit: v0.0.62
 _src_path: gh:LabAutomationAndScreening/copier-aws-central-infrastructure.git
 aws_identity_center_id: d-9067c20053
 aws_org_home_region: us-east-1
@@ -16,6 +16,7 @@ identity_center_production_account_id: '872515268414'
 import_github_aws_org_repos: false
 initial_github_admin: ejfine
 initial_iac_management_deploy_occurred: true
+install_claude_cli: false
 is_open_source: true
 manage_github_repos: true
 manage_okta: false

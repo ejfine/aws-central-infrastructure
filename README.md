@@ -5,7 +5,19 @@
 [![Actions status](https://www.github.com/ejfine/aws-central-infrastructure/actions/workflows/ci.yaml/badge.svg?branch=main)](https://www.github.com/ejfine/aws-central-infrastructure/actions)
 [![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://www.github.com/ejfine/aws-central-infrastructure)
 
+# Key Features
 
+## Manual artifact storage
+
+### Manual Artifacts ECR
+Any role in the org can pull from this. It exists in the Central Infrastructure account.
+Example of usage to load a tarball into it:
+```bash
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 183631337349.dkr.ecr.us-east-1.amazonaws.com
+docker load -i my-tarball.tar
+docker tag original_repo:original_tag 183631337349.dkr.ecr.us-east-1.amazonaws.com/manual-artifacts:my-app-1.0
+docker push 183631337349.dkr.ecr.us-east-1.amazonaws.com/manual-artifacts:my-app-1.0
+```
 # Usage
 ## Managing your company's GitHub Organization
 ### Repositories
@@ -20,6 +32,8 @@ Teams can have a parent, from which they inherit permissions. This is useful for
 If an explicit parent is not provided in the configuration, the team will have the root `Everyone` team as its parent.
 
 You can grant a Team permissions for a repository even if that repository was not created using this process.
+
+In addition to assigning individuals to specific teams, ensure any new member of your organization is added to the `Everyone` team (near the top of the file), which provides read access to many things and other base level access (including the ability to make pull requests to this repository).
 
 ### External Collaborators
 The file `src/aws_central_infrastructure/github_repos/collaborators.py` contains a list of external collaborators that are managed by this project. To add a new collaborator, add a new entry to the `configs` list.
