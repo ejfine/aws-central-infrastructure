@@ -18,3 +18,11 @@ def generate_oidc(
             repo_name="elifine-com",
         )
     )
+    workload_name = "rytermedia-com"
+    all_oidc[workload_name].extend(
+        create_oidc_for_standard_workload(
+            workload_info=workloads_info[workload_name],
+            repo_org=CENTRAL_INFRA_GITHUB_ORG_NAME,
+            repo_name="rytermedia-com",
+        )
+    )

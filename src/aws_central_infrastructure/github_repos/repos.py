@@ -127,3 +127,11 @@ def create_repo_configs(configs: list[GithubRepoConfig]):
             visibility="public",
         )
     )
+    configs.append(
+        GithubRepoConfig(
+            name="rytermedia-com",
+            description="Website for Ryter Media",
+            org_admin_rule_bypass=True,
+            visibility="public",
+        )
+    )
