@@ -134,7 +134,7 @@ MANUAL_SECRETS_ENTRY_PERM_SET_CONTAINER = AwsSsoPermissionSetContainer(
     inline_policy_callable=create_manual_secrets_entry_inline_policy,
 )
 MANUAL_ARTIFACTS_UPLOAD_PERM_SET_CONTAINER = AwsSsoPermissionSetContainer(
-    name="ManualArtifactsBucketAccess",
+    name="ManualArtifactsUploadAccess",
     relay_state=lambda: f"https://{get_config_str('proj:aws_org_home_region')}.console.aws.amazon.com/s3/buckets?region={get_config_str('proj:aws_org_home_region')}",
     description="The ability to create and delete artifacts within the Manual Artifacts S3 bucket(s).",
     inline_policy_callable=create_manual_artifacts_upload_inline_policy,
