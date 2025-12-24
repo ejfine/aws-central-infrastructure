@@ -11,12 +11,14 @@ from aws_central_infrastructure.iac_management.lib import CODE_ARTIFACT_SERVICE_
 from aws_central_infrastructure.iac_management.lib import PULL_FROM_CENTRAL_ECRS_STATEMENTS
 
 from ..permissions import create_permissions
+from .permissions import MANUAL_ARTIFACTS_UPLOAD_PERM_SET_CONTAINER
 
 logger = logging.getLogger(__name__)
 
 
 def create_all_permissions(workloads_dict: dict[str, AwsLogicalWorkload]):
     create_permissions(workloads_dict)
+    all_users_list = list(all_created_users.values())
     core_infra_base_access = AwsSsoPermissionSet(
         name="CoreInfraBaseAccess",
         description="Base access everyone should have for the Central/Core Infrastructure Account",
@@ -42,5 +44,11 @@ def create_all_permissions(workloads_dict: dict[str, AwsLogicalWorkload]):
     _ = AwsSsoPermissionSetAccountAssignments(
         account_info=workloads_dict["central-infra"].prod_accounts[0],
         permission_set=core_infra_base_access,
-        users=list(all_created_users.values()),
+        users=all_users_list,
+    )
+    manual_artifacts_perm_set = MANUAL_ARTIFACTS_UPLOAD_PERM_SET_CONTAINER.permission_set
+    _ = AwsSsoPermissionSetAccountAssignments(
+        account_info=workloads_dict["central-infra"].prod_accounts[0],
+        permission_set=manual_artifacts_perm_set,
+        users=all_users_list,
     )
