@@ -1,9 +1,9 @@
 from lab_auto_pulumi import AwsLogicalWorkload
+from lab_auto_pulumi import all_created_users
 
 from .lib import LOW_RISK_ADMIN_PERM_SET_CONTAINER
 from .lib import AwsSsoPermissionSetAccountAssignments
 from .lib import DefaultWorkloadPermissionAssignments
-from .lib import all_created_users
 from .lib import create_org_admin_permissions
 
 
