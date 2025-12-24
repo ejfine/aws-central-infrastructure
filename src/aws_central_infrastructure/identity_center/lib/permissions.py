@@ -61,10 +61,7 @@ def create_manual_artifacts_upload_inline_policy() -> str:
             GetPolicyDocumentStatementArgs(
                 sid="ListAllBuckets",
                 effect="Allow",
-                actions=[
-                    "s3:ListAllMyBuckets",
-                    "s3:GetBucketLocation",
-                ],
+                actions=["s3:ListAllMyBuckets"],
                 resources=["*"],
             ),
             GetPolicyDocumentStatementArgs(
@@ -74,6 +71,7 @@ def create_manual_artifacts_upload_inline_policy() -> str:
                     "s3:ListBucket",
                     "s3:ListBucketVersions",
                     "s3:GetBucketVersioning",
+                    "s3:GetBucketLocation",
                 ],
                 resources=["arn:aws:s3:::*"],
                 conditions=[
