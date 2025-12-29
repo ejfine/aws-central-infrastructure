@@ -25,6 +25,14 @@ def create_repo_configs(configs: list[GithubRepoConfig]):
     )
     configs.append(
         GithubRepoConfig(
+            name="nuxt-ui-test-utils",
+            description="Helper functions for test suites involving @nuxt/ui components",
+            org_admin_rule_bypass=True,
+            visibility="public",
+        )
+    )
+    configs.append(
+        GithubRepoConfig(
             name="ephemeral-pulumi-deploy",
             description="Be able to easy spin up and down ephemeral Pulumi stacks",
             org_admin_rule_bypass=True,
@@ -69,6 +77,15 @@ def create_repo_configs(configs: list[GithubRepoConfig]):
         GithubRepoConfig(
             name="copier-python-package-template",
             description="A copier template for Python libraries or executables",
+            org_admin_rule_bypass=True,
+            delete_branch_on_merge=False,
+            visibility="public",
+        )
+    )
+    configs.append(
+        GithubRepoConfig(
+            name="copier-vue-package-template",
+            description="A copier template for TS/VueJS/Nuxt libraries",
             org_admin_rule_bypass=True,
             delete_branch_on_merge=False,
             visibility="public",
