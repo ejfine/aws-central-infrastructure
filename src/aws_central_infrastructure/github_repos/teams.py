@@ -32,7 +32,7 @@ def define_team_configs(
     configs.append(
         GithubTeamConfig(
             name="Pulumi Libraries",
-            description="Copier Templates Team",
+            description="Pulumi Libraries Team",
             members=["ejfine", "zendern"],
             repo_permissions={
                 "ephemeral-pulumi-deploy": "push",
