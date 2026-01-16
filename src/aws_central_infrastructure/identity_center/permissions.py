@@ -51,5 +51,5 @@ def create_permissions(workloads_dict: dict[str, AwsLogicalWorkload]) -> None:
     _ = AwsSsoPermissionSetAccountAssignments(
         account_info=workloads_dict["rytermedia-com"].prod_accounts[0],
         permission_set=MANUAL_ARTIFACTS_UPLOAD_PERM_SET_CONTAINER.permission_set,
-        users=[all_created_users["eli.fine"]],
+        users=[all_created_users["eli.fine"], all_created_users["ethanryter3@gmail.com"]],
     )
