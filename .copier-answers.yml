@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier
-_commit: v0.0.70
+_commit: v0.0.70-1-ga203856
 _src_path: gh:LabAutomationAndScreening/copier-aws-central-infrastructure.git
 aws_identity_center_id: d-9067c20053
 aws_org_home_region: us-east-1
@@ -20,6 +20,7 @@ install_claude_cli: false
 is_open_source: true
 manage_github_repos: true
 manage_okta: false
+pull_from_ecr: false
 python_package_registry: PyPI
 python_version: 3.13.1
 repo_name: aws-central-infrastructure
