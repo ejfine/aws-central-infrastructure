@@ -144,3 +144,11 @@ def create_repo_configs(configs: list[GithubRepoConfig]):
             visibility="public",
         )
     )
+    configs.append(
+        GithubRepoConfig(
+            name="latex-presentations",
+            description="Tooling for using LaTeX to create posters and presentations along with public examples of lab automation presentations",
+            org_admin_rule_bypass=True,
+            visibility="public",
+        )
+    )
