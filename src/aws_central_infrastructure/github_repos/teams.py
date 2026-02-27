@@ -40,4 +40,14 @@ def define_team_configs(
             },
         )
     )
+    configs.append(
+        GithubTeamConfig(
+            name="LaTeX",
+            description="LaTeX Team",
+            members=["ejfine", "zendern"],
+            repo_permissions={
+                "latex-presentations": "push",
+            },
+        )
+    )
     return org_members
