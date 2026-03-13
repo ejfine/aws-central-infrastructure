@@ -12,7 +12,7 @@
     "ghcr.io/devcontainers/features/aws-cli:1.1.2": {
       // https://github.com/devcontainers/features/blob/main/src/aws-cli/devcontainer-feature.json
       // view latest version https://raw.githubusercontent.com/aws/aws-cli/v2/CHANGELOG.rst
-      "version": "2.32.6",
+      "version": "2.32.6"
     },
     "ghcr.io/devcontainers/features/python:1.8.0": {
       // https://github.com/devcontainers/features/blob/main/src/python/devcontainer-feature.json
@@ -35,7 +35,7 @@
         "MS-vsliveshare.vsliveshare@1.0.5905",
         "github.copilot@1.388.0",
         "github.copilot-chat@0.38.2026022704",
-        "anthropic.claude-code@2.1.61",
+        "anthropic.claude-code@2.1.74",
 
         // Python
         "ms-python.python@2026.2.2026021801",
@@ -73,5 +73,5 @@
   "initializeCommand": "sh .devcontainer/initialize-command.sh",
   "onCreateCommand": "sh .devcontainer/on-create-command.sh",
   "postStartCommand": "sh .devcontainer/post-start-command.sh"
-  // Devcontainer context hash (do not manually edit this, it's managed by a pre-commit hook): 1c58928e # spellchecker:disable-line
+  // Devcontainer context hash (do not manually edit this, it's managed by a pre-commit hook): e7c47a50 # spellchecker:disable-line
 }
