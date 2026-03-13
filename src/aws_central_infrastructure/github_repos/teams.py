@@ -12,12 +12,12 @@ def define_team_configs(
     """
     _ = dev_sec_ops_team_config  # this line can be removed once any adjustments have been made to the DevSecOps team config
     org_members = GithubOrgMembers(org_admins=[ROOT_GITHUB_ADMIN_USERNAME])
-    org_members.everyone.extend(["zendern"])
+    org_members.everyone.extend(["zendern", "idonaldson"])
     configs.append(
         GithubTeamConfig(
             name="Copier Templates",
             description="Copier Templates Team",
-            members=["ejfine", "zendern"],
+            members=["ejfine", "zendern", "idonaldson"],
             repo_permissions={
                 "copier-base-template": "push",
                 "copier-aws-organization": "push",
@@ -26,6 +26,7 @@ def define_team_configs(
                 "copier-pulumi-project": "push",
                 "copier-nuxt-python-intranet-app": "push",
                 "copier-nuxt-static-aws": "push",
+                "copier-vue-package-template": "push",
             },
         )
     )
@@ -33,7 +34,7 @@ def define_team_configs(
         GithubTeamConfig(
             name="Pulumi Libraries",
             description="Pulumi Libraries Team",
-            members=["ejfine", "zendern"],
+            members=["ejfine", "zendern", "idonaldson"],
             repo_permissions={
                 "ephemeral-pulumi-deploy": "push",
                 "lab-auto-pulumi": "push",
@@ -44,7 +45,7 @@ def define_team_configs(
         GithubTeamConfig(
             name="LaTeX",
             description="LaTeX Team",
-            members=["ejfine", "zendern"],
+            members=["ejfine", "zendern", "idonaldson"],
             repo_permissions={
                 "latex-presentations": "push",
             },
