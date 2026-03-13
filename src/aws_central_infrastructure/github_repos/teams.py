@@ -26,6 +26,7 @@ def define_team_configs(
                 "copier-pulumi-project": "push",
                 "copier-nuxt-python-intranet-app": "push",
                 "copier-nuxt-static-aws": "push",
+                "copier-vue-package-template": "push",
             },
         )
     )
