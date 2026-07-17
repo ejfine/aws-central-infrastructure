@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier
-_commit: v0.0.81
+_commit: v0.0.82
 _src_path: gh:LabAutomationAndScreening/copier-aws-central-infrastructure.git
 aws_identity_center_id: d-9067c20053
 aws_org_home_region: us-east-1
@@ -9,6 +9,7 @@ aws_region_for_stack: us-east-1
 central_infra_github_organization_name: ejfine
 cloud_courier_infra_repo_name: cloud-courier-infrastructure
 configure_cloud_courier: true
+create_central_networking_hosted_zone: false
 create_private_subnet: false
 description: Manage central infra for this AWS org
 github_tokens_created: true

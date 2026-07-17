@@ -1,3 +1,10 @@
+# ============== WARNING ==============================================================================
+# File is managed by copier template: gh:LabAutomationAndScreening/copier-aws-central-infrastructure.git
+# See .config/.copier-managed-files.json for details.
+#
+# You are welcome to make changes to this file in your repo if they are custom to your project,
+# but if the change should be shared with other projects, please backport it to the template repo.
+# =====================================================================================================
 from lab_auto_pulumi import AwsLogicalWorkload
 from lab_auto_pulumi import all_created_users
 
@@ -51,5 +58,8 @@ def create_permissions(workloads_dict: dict[str, AwsLogicalWorkload]) -> None:
     _ = AwsSsoPermissionSetAccountAssignments(
         account_info=workloads_dict["rytermedia-com"].prod_accounts[0],
         permission_set=MANUAL_ARTIFACTS_UPLOAD_PERM_SET_CONTAINER.permission_set,
-        users=[all_created_users["eli.fine"], all_created_users["ethanryter3@gmail.com"]],
+        users=[
+            all_created_users["eli.fine"],
+            all_created_users["ethanryter3@gmail.com"],
+        ],
     )
