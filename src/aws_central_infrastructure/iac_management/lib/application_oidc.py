@@ -1,3 +1,10 @@
+# ============== WARNING ==============================================================================
+# File is managed by copier template: gh:LabAutomationAndScreening/copier-aws-central-infrastructure.git
+# See .config/.copier-managed-files.json for details.
+#
+# You are welcome to make changes to this file in your repo if they are custom to your project,
+# but if the change should be shared with other projects, please backport it to the template repo.
+# =====================================================================================================
 from ephemeral_pulumi_deploy import get_aws_account_id
 from lab_auto_pulumi import AwsLogicalWorkload
 from lab_auto_pulumi import WorkloadName
@@ -53,15 +60,17 @@ def generate_all_oidc(
             role_name="CoreInfraBaseAccess",
             repo_org=CENTRAL_INFRA_GITHUB_ORG_NAME,
             repo_name="*",
-            role_policy=iam.RolePolicyArgs(
-                policy_name="ReadFromCentralArtifactStores",
-                policy_document=get_policy_document(
-                    statements=[
-                        CODE_ARTIFACT_SERVICE_BEARER_STATEMENT,
-                        *PULL_FROM_CENTRAL_ECRS_STATEMENTS,
-                    ]
-                ).json,
-            ),
+            role_policies=[
+                iam.RolePolicyArgs(
+                    policy_name="ReadFromCentralArtifactStores",
+                    policy_document=get_policy_document(
+                        statements=[
+                            CODE_ARTIFACT_SERVICE_BEARER_STATEMENT,
+                            *PULL_FROM_CENTRAL_ECRS_STATEMENTS,
+                        ]
+                    ).json,
+                ),
+            ],
         ),
     )
     generate_oidc(workloads_info=workloads_info, all_oidc=all_oidc)
