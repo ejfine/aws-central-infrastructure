@@ -12,7 +12,6 @@ from ephemeral_pulumi_deploy.utils import common_tags_native
 from pulumi import ResourceOptions
 from pulumi_aws_native import secretsmanager
 
-from aws_central_infrastructure.iac_management.lib import CENTRAL_INFRA_GITHUB_ORG_NAME
 from aws_central_infrastructure.iac_management.lib import CENTRAL_INFRA_REPO_NAME
 
 from ..collaborators import define_repository_collaborators
@@ -114,7 +113,7 @@ def pulumi_program() -> None:
         else None
     )
     build_org_github_resources(
-        org_name=CENTRAL_INFRA_GITHUB_ORG_NAME,
+        org_name="LabAutomationAndScreening",  # TODO: figure out how to get rid of this hack so it can change back to # CENTRAL_INFRA_GITHUB_ORG_NAME,
         repo_configs=repo_configs,
         team_configs=team_configs,
         collaborator_configs=collaborator_configs,
