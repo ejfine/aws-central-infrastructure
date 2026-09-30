@@ -6,7 +6,6 @@
 # but if the change should be shared with other projects, please backport it to the template repo.
 # =====================================================================================================
 import logging
-from typing import Any
 
 from ephemeral_pulumi_deploy import run_cli
 from pulumi.automation import ConfigValue
@@ -17,9 +16,9 @@ logger = logging.getLogger(__name__)
 
 
 # pylint:disable=duplicate-code # there's not much to DRY up here, it's some commonalities between the two deploy scripts
-def generate_stack_config() -> dict[str, Any]:
+def generate_stack_config() -> dict[str, str | ConfigValue]:
     """Generate the stack configuration."""
-    stack_config: dict[str, Any] = {}
+    stack_config: dict[str, str | ConfigValue] = {}
     stack_config["proj:pulumi_project_name"] = "github-repos"
     stack_config["proj:aws_org_home_region"] = ConfigValue(value="us-east-1")
     github_repo_name = "aws-central-infrastructure"
