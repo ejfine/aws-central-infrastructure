@@ -38,7 +38,7 @@ jobs:
       should-run: ${{ steps.check.outputs.should-run }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
       - id: check
@@ -61,7 +61,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v7.0.1
 
       - name: Install latest versions of python packages
         uses: ./.github/actions/install_deps
@@ -204,20 +204,16 @@ jobs:
     if: always()
     steps:
       - name: fail if prior job failure
+        # Iterating the needs context keeps this gate from drifting out of sync with the job list above
+        env:
+          NEEDS: ${{ toJSON(needs) }}
         run: |
-          success_pattern="^(skipped|success)$" # these are the possibilities: https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#needs-context
+          # these are the possibilities: https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#needs-context
+          not_ok=$(jq -r 'to_entries[] | select(.value.result | test("^(skipped|success)$") | not) | .key' <<<"$NEEDS")
 
-          if [[ ! "${{ needs.get-values.result }}" =~ $success_pattern ]] ||
-            [[ ! "${{ needs.check-skip-duplicate.result }}" =~ $success_pattern ]] ||
-            [[ ! "${{ needs.lint.result }}" =~ $success_pattern ]] ||
-            [[ ! "${{ needs.unit-test.result }}" =~ $success_pattern ]] ||
-            [[ ! "${{ needs.iac-management-pulumi.result }}" =~ $success_pattern ]] ||
-            [[ ! "${{ needs.artifact-stores-pulumi.result }}" =~ $success_pattern ]] ||
-            [[ ! "${{ needs.central-networking-pulumi.result }}" =~ $success_pattern ]] ||
-            [[ ! "${{ needs.identity-center-pulumi.result }}" =~ $success_pattern ]] ||
-            [[ ! "${{ needs.github-repos-pulumi.result }}" =~ $success_pattern ]] ||
-            [[ ! "${{ needs.confirm-on-tagged-copier-template.result }}" =~ $success_pattern ]]; then
-            echo "❌ One or more jobs did not finish with skipped or success"
+          if [[ -n "$not_ok" ]]; then
+            echo "❌ One or more jobs did not finish with skipped or success:"
+            echo "$not_ok"
             exit 1
           fi
           echo "✅ All jobs finished with skipped or success"
