@@ -22,6 +22,13 @@ def define_team_configs(
     org_members.everyone.extend(["zendern", "idonaldson"])
     configs.append(
         GithubTeamConfig(
+            name="Super Maintainers",
+            description="Members may merge pull requests without an approving review on repos that opt in via review_exempt_teams. CI still applies.",
+            members=["ejfine"],
+        )
+    )
+    configs.append(
+        GithubTeamConfig(
             name="Copier Templates",
             description="Copier Templates Team",
             members=["ejfine", "zendern", "idonaldson"],

@@ -53,7 +53,7 @@ https://github.com/organizations/ejfine/settings/member_privileges
 
 You'll need to create a Personal Access Token (PAT) to allow Pulumi to manage the GitHub Organization.
 
-Token permissions needed: All repositories, Administration: Read & write, Environments: Read & write, Contents: read & write.  Organization: Members Read&Write, Custom organization roles: Read & write (only needed if org_role_assignments are configured)
+Token permissions needed: All repositories, Administration: Read & write, Environments: Read & write, Contents: read & write.  Organization: Members Read&Write, Custom organization roles: Read (only needed if org_role_assignments are configured)
 In the repository settings, create both a Repository Secret and a Dependabot Secret with the name `IAC_GITHUB_API_TOKENS`. The value of the secret should be formatted like this: `{"org_tokens": {"MyGithubOrganizationName": {"deploy_token": "my-deploy-token"}}}`
 
 ## Allowing a git repository to publish a package to AWS CodeArtifact

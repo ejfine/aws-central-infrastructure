@@ -180,6 +180,8 @@
         "tests/unit/artifact_stores/__init__.py",
         "tests/unit/artifact_stores/test_image_builder.py",
         "tests/unit/github_repos/__init__.py",
+        "tests/unit/github_repos/test_merge_queue.py",
+        "tests/unit/github_repos/test_review_exemptions.py",
         "tests/unit/github_repos/test_teams.py",
         "tests/unit/iac_management/__init__.py",
         "tests/unit/iac_management/test_oidc_assume_role_policy.py"
