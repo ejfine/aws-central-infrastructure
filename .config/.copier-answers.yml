@@ -7,6 +7,7 @@ aws_organization_repo_name: aws-organization
 aws_production_account_id: 038462771856
 aws_region_for_stack: us-east-1
 central_infra_github_organization_name: ejfine
+central_infra_github_organization_id: 5436635
 cloud_courier_infra_repo_name: cloud-courier-infrastructure
 configure_cloud_courier: true
 create_central_networking_hosted_zone: false
